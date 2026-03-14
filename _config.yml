@@ -1,0 +1,25 @@
+title: Suami Medeiros # your name here
+logo: "/Foto_perfil/foto_perfil.png" # your photo here
+
+description:
+  <p align="center">
+  <a href="https://www.linkedin.com/in/surocham/">LinkedIn</a> |
+  <a href="https://suamimedeiros.github.io/">Portfólio</a> |
+  <a href="https://github.com/surocham">GitHub</a> |
+  <a href="mailto:suamirochati@gmail.com">E-mail</a>
+  </p>
+  
+  <p align="center">
+   Olá, este é o meu portfólio de projetos. <br> 
+   Aqui, compartilho como aplico soluções em Dados para resolver problemas de negócios.
+   
+   </p>
+   <p align="center">
+   <a href="#inicio">Início</a> <br>
+   <a href="#projetos-end-to-end">Projetos de Dados End-to-End</a> <br>
+   </p> 
+   </p>
+   <p align="center">
+   <br><br>
+   </p>
+theme: jekyll-theme-minimal
