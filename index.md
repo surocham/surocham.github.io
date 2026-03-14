@@ -15,7 +15,7 @@ Meu objetivo é apoiar empresas na tomada de decisões, oferecendo soluções ba
 ## Projetos End to End <a name="projetos-end-to-end"></a>
 
 ### Pipeline para migração de tabela com Airflow e Docker
-![image](https://github.com/user-attachments/assets/3c2011ea-a406-40cd-b7ac-7604181e5a22)
+![image](/assets/airflow.jpg)
 
 **Contexto:** Documentação completa do processo de construção de um pipeline ETL para migrar a tabela customers do source_db para o target_db usando Apache Airflow orquestrado via Astro CLI.
 
@@ -57,7 +57,7 @@ Documentar a ordem de inicialização quando há dependências entre serviços
 #### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/desafio_pratico_fundamentos_DE)
 ---
 ### Pipeline de web scraping utilizando Selenium WebDriver para extrair e estruturar dados públicos
-<img width="516" height="312" alt="image" src="https://github.com/user-attachments/assets/7e2baf8d-f42d-4e6c-918a-a6a09a3ea4b1" />
+
 
 **Contexto:** O projeto simula um cenário real de trabalho em ciência de dados e engenharia de dados: antes de realizar qualquer análise, é necessário coletar, estruturar e tratar os dados brutos.
 
@@ -142,7 +142,7 @@ A Análise de Correspondência é um mapa que mostra quais categorias se parecem
 - Python
 - Visual Studio Code
 
-  #### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-pink?logo=GitHub)](https://github.com/surocham/vinho_brasil_analytics)
+  #### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/vinho_brasil_analytics)
 
 ---
 
