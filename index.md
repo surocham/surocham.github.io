@@ -1,156 +1,146 @@
 # Portfólio <a name="inicio"></a>
 
-## Sobre mim 
-Profissional com experiência em análise de dados. Tenho habilidades em modelagem de dados, construção de pipelines, desenvolvimento de soluções end-to-end e criação de dashboards analíticos.  
+## Sobre mim
 
-Minha experiência em análise de dados no estágio durante a graduação, deu origem à minha trajetória na área. Durante esse período, percebi como a análise de dados pode impactar significativamente a melhoria de processos e potencializar a geração de resultados positivos.   
-   
-Meu objetivo é apoiar empresas na tomada de decisões, oferecendo soluções baseadas em dados para impulsionar o crescimento e a inovação.    
+Profissional em transição para a área de dados, com experiência prática em análise, organização e interpretação de dados voltados à tomada de decisão. Ao longo da minha trajetória como desenvolvedora mobile, desenvolvi uma visão analítica apurada, trabalhando diretamente com dados de uso de aplicações, métricas de performance e ciclos de entrega orientados a resultado.
 
-**Habilidades Técnicas:**    
-- Linguagens: Python, SQL e R
-- Ferramentas: Airflow, Amazon QuickSight, dbt, Git e Power BI.  
-   
+Domino ferramentas como **SQL, Power BI, Python e Excel** para extração, tratamento e visualização de dados. Tenho facilidade para comunicar insights a públicos técnicos e não técnicos, habilidade desenvolvida em projetos com clientes e times multidisciplinares ao longo da minha experiência como desenvolvedora.
+
+Contribuí para entregas que resultaram em redução de aproximadamente 20% em erros recorrentes em aplicações mobile, além de apoiar mais de 10 funcionalidades entregues dentro do prazo e escopo definidos pelo time de produto.
+
+Busco oportunidades como Analista de Dados onde possa aplicar minha capacidade analítica, meu conhecimento técnico em dados e minha experiência com metodologias ágeis para gerar valor real ao negócio.
+
+Analitica de Dados | Data Analytics | Business Intelligence | BI | ETL | Tratamento de Dados | Limpeza de Dados | Data Cleaning | Visualizacao de Dados | Data Visualization | Dashboard | KPI | Metricas | Tomada de Decisao Baseada em Dados | Data-Driven | Storytelling com Dados | Analise Exploratoria | EDA | Pandas | NumPy | Power Query | DAX | SQL Server | PostgreSQL | MySQL | Relatorio Gerencial | Insights | Analista de Dados Junior | Junior Data Analyst | Transicao de Carreira em Dados | Scrum | Kanban | Metodologias Ageis
+
 ---
-## Projetos End to End <a name="projetos-end-to-end"></a>
 
-### Pipeline para migração de tabela com Airflow e Docker
+## Projetos<a name="projetos"></a>
+
+### Pipeline ETL com Airflow e Docker
+
 ![image](/assets/airflow.jpg)
 
-**Contexto:** Documentação completa do processo de construção de um pipeline ETL para migrar a tabela customers do source_db para o target_db usando Apache Airflow orquestrado via Astro CLI.
+**Contexto e Problema:**
 
-**Objetivos:** 
-O objetivo do projeto é construir um pipeline ETL que:
+Em um cenário de estudo prático de orquestração de dados, eu precisava construir um pipeline ETL que extraísse a tabela customers de um banco PostgreSQL (fonte – source_db), armazenasse localmente e carregasse os dados em outro banco PostgreSQL (destino – `target_db`). O desafio era garantir que o processo fosse automatizado, agendado e monitorado, utilizando tecnologias modernas como Apache Airflow e Docker. Além disso, era necessário tratar problemas comuns de rede entre containers, compatibilidade de versões do Airflow e persistência de arquivos temporários.
 
-Extrai a tabela customers do banco source_db
-Salva os dados localmente em um arquivo CSV
-Carrega os dados no banco target_db
-Valida a integridade da carga comparando contagens
+**Objetivos:**
 
-**Resultados:**
-- Airflow
+O objetivo principal era desenvolver uma DAG no Apache Airflow com quatro tarefas encadeadas:
 
-Parâmetros como days_ago e schedule_interval foram descontinuados — sempre verifique a versão instalada
-O Airflow detecta mudanças na pasta dags/ automaticamente em ~30 segundos, sem precisar reiniciar
-O painel de Erros de Importação é o primeiro lugar a verificar quando uma DAG não aparece
+1. Extrair os dados do `source_db` e salvá‑los em CSV.
 
-- Docker
+2. Validar a existência e integridade do arquivo CSV.
 
-localhost dentro de um container nunca aponta para outros serviços — use o nome do serviço
-Serviços em docker-compose diferentes ficam em redes separadas por padrão
-Volumes precisam ser mapeados no container correto — mapear no source_db não adianta se quem grava é o Airflow
+3. Carregar o conteúdo do CSV no `target_db`.
 
-Boas práticas
+4. Validar a carga comparando a contagem de registros entre o CSV e a tabela de destino.
 
-Nunca colocar credenciais diretamente no código — usar as Connections do Airflow (Admin > Connections)
-Sempre ler o log completo da task que falhou, não apenas a mensagem resumida
-Documentar a ordem de inicialização quando há dependências entre serviços
+Requisitos adicionais:
 
-**Ferramentas e Tecnologias Utilizadas:**
-- Airflow
-- Docker
-- Git
-- Python
-- SQL
-- Visual Studio Code  
+- O pipeline deveria rodar dentro de containers Docker, com os bancos em redes isoladas.
 
-#### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/desafio_pratico_fundamentos_DE)
+- O código deveria ser versionado, documentado e reproduzível.
+
+Ao final, o `target_db` deveria conter exatamente os mesmos 91 clientes existentes no `source_db`.
+
+
+**Resultado:**
+Resultados técnicos
+
+Pipeline ETL funcional e agendado diariamente, sem intervenção manual.
+
+Migração bem‑sucedida de 91 registros da tabela customers do source_db para o target_db.
+
+Validação automática garantiu integridade dos dados (100% de correspondência entre CSV e destino).
+
+Código disponível em repositório público, com README.md detalhado e documentação dos erros e soluções.
+
+Aprendizados e competências desenvolvidas
+
+Orquestração de pipelines com Apache Airflow (DAGs, operadores, sensores).
+
+Comunicação entre containers Docker em redes personalizadas.
+
+Tratamento de problemas reais de ambiente: credenciais, caminhos de arquivo, compatibilidade de versões.
+
+Boas práticas de segurança (uso de Connections do Airflow – mencionado no README).
+
+Documentação de portfólio com método STAR, facilitando a comunicação com recrutadores.
+
+#### Para acessar o projeto basta clicar: 
+
+[![View on GitHub](https://img.shields.io/badge/GitHub-Ver_no_GitHub-darkgreen?logo=GitHub)](https://github.com/surocham/desafio_pratico_fundamentos_DE)
+
 ---
+
 ### Pipeline de web scraping utilizando Selenium WebDriver para extrair e estruturar dados públicos
 
+**Contexto:**
 
-**Contexto:** O projeto simula um cenário real de trabalho em ciência de dados e engenharia de dados: antes de realizar qualquer análise, é necessário coletar, estruturar e tratar os dados brutos.
+No início de 2025, participei de um desafio técnico promovido pela He4rt Developers, uma comunidade muito forte na área de tecnologia. O desafio consistia em construir um web scraper utilizando Selenium WebDriver para extrair dados públicos do Portal da Transparência de uma prefeitura brasileira. A ideia era simular um cenário real de trabalho em engenharia de dados: antes de qualquer análise, é preciso coletar, estruturar e tratar os dados brutos, que muitas vezes não estão em formatos amigáveis.
 
-
-**Objetivos:**
-Cada participante deverá desenvolver um scraper capaz de navegar em um portal de transparência municipal, extrair dados relevantes e organizá-los em uma tabela estruturada pronta para análise.
-
-Os dados coletados serão posteriormente utilizados em uma live técnica, onde serão exploradas técnicas analíticas de ciência de dados sobre a base construída pelos participantes.
-
-**Resultados:**
-• Qual portal foi utilizado?
-
-O portal usado foi: IPREM - Folha de Pagamento - 2025 da Prefeitura de São Paulo URL
-
-• Qual município foi analisado?
-
-São Paulo
-
-• Quais dados foram coletados
-
-Folha de pagamento IPREM
-
-
-**Ferramentas e linguagens utilizadas:**
-- Git
-- Selenium Web Driver
-- Python
-- Docker
-- Visual Studio Code
-  
-#### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/Desafio_He4rt_Data)
----
-### Artigo Análise de Correspondência Simples
-![image](https://substackcdn.com/image/fetch/$s_!i_Tf!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F8d82c6d7-dc0d-4f42-b898-1cf27bc6615c_498x270.gif)
-
-**Contexto:** Um projeto completo de Análise de Correspondência Simples (CA) usando Python, onde exploramos as relações entre as aldeias do mundo Naruto e os estilos de luta dos shinobis.
+Eu nunca havia trabalhado com Selenium antes, e o desafio era grande: em poucos dias, precisava aprender a automatizar a navegação em um site governamental, extrair uma tabela dinâmica e ainda entregar um dataset limpo e documentado. O projeto seria avaliado não só pela funcionalidade, mas também pela organização, boas práticas e uso de ferramentas como Docker.
 
 **Objetivos:**
-1	Importação de bibliotecas	Reunir o squad
-2	Carregamento dos dados	Ler o relatório da missão
-3	Tabela de contingência	Ver quantos shinobis de cada aldeia preferem cada estilo
-4	Perfis de linha e coluna	Montar o "perfil de combate" de cada aldeia
-5	Teste Qui-Quadrado	Confirmar que a associação não é coincidência
-6	Resíduos padronizados	Encontrar os "Rock Lees" dos dados
-7	Decomposição SVD	Usar o Sharingan — focar no que importa
-8	Mapa de Correspondência	Desenhar o mapa final do mundo dos shinobis
-9	Interpretação	Entender quem se pareça com quem
+
+Meu objetivo principal era entregar um scraper funcional que extraísse dados de um portal de transparência municipal, estruturasse esses dados em um dataset tabular (CSV) e o deixasse pronto para análises futuras. Os requisitos técnicos do desafio eram:
+
+- Usar Selenium WebDriver obrigatoriamente (linguagem livre, escolhi Python).
+
+- Extrair dados de pelo menos uma tabela do portal (com múltiplas linhas e colunas).
+
+- Realizar limpeza e transformação dos dados, padronizando formatos e tratando valores inconsistentes.
+
+- Salvar o resultado final em um arquivo CSV ou similar.
+
+- Opcional (bônus): usar Docker para executar o scraper, implementar scroll/paginação para carregar todos os dados, e estruturar o código seguindo o padrão ETL.
+
+- Por fim, publicar tudo no GitHub com um README detalhado.
+
+Minha escolha foi extrair a folha de pagamento IPREM - 2025 da Prefeitura de São Paulo, uma tabela com informações como nome do servidor, cargo, lotação, remunerações etc. A tabela era dinâmica (SlickGrid) e estava dentro de um iframe com carregamento lento.
 
 **Resultados:**
-A Análise de Correspondência é um mapa que mostra quais categorias se parecem entre si, sem precisar olhar para uma tabela cheia de números!
+Entregáveis técnicos
 
-**Ferramentas e linguagens utilizadas:**
-- Git
-- Python
-- Visual Studio Code
+- Um scraper funcional que extrai a folha de pagamento IPREM de 2025 da Prefeitura de São Paulo.
 
-#### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/ca_naruto)
----
+- Um dataset estruturado em CSV com 12 colunas e dezenas de registros (exemplo: MARIA LENALDA DOS SANTOS SILVA, cargo CHEFE DE EQUIPE I, total de remuneração R$ 20.615,89).
 
+- Código 100% Python, modularizado em funções separadas (extract, transform, load).
 
-### Análise Estratégica do Setor Vitivinícola Brasileiro
-![image](https://github.com/user-attachments/assets/fabe2652-bbed-42e8-b0a6-7f3e14324880)
+- Uso de Docker para execução do Selenium, garantindo reprodutibilidade.
 
-**Contexto:** Este projeto foi desenvolvido como parte do Tech Challenge da FIAP - Pós-Graduação em Data Analytics, apresentando uma análise estratégica do setor vitivinícola brasileiro com foco em competitividade internacional e oportunidades de crescimento.
+- Documentação completa no README.md, incluindo capturas de tela do ambiente, da execução e da identificação de elementos via XPath.
 
-**Objetivos:**
-- Analisar a evolução dos preços médios de exportação por país de destino
-- Calcular e interpretar a Taxa de Crescimento Anual Composta (CAGR) das exportações
-- Determinar a correlação entre produção nacional e volume exportado
-- Avaliar a taxa de utilização da capacidade produtiva para exportação
-- Propor recomendações estratégicas baseadas em evidências
+- Versionamento no GitHub com 8 commits.
 
-**Resultados:**
-- Analisar a evolução dos preços médios de exportação por país de destino
-- Calcular e interpretar a Taxa de Crescimento Anual Composta (CAGR) das exportações
-- Determinar a correlação entre produção nacional e volume exportado
-- Avaliar a taxa de utilização da capacidade produtiva para exportação
-- Propor recomendações estratégicas baseadas em evidências
+**Validação dos dados**
 
-**Ferramentas e linguagens utilizadas:**
-- Git
-- Python
-- Visual Studio Code
+Apliquei limpeza consistente: padronização de strings, conversão de tipos, tratamento de datas, remoção de duplicatas e de registros inconsistentes. A coluna total_remuneracao foi calculada automaticamente.
 
-  #### Para acessar o projeto basta clicar em:      [![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-blue?logo=GitHub)](https://github.com/surocham/vinho_brasil_analytics)
+**Aprendizados e competências desenvolvidas**
+
+- Web scraping com Selenium: domínio de seletores CSS, iframes, scroll dinâmico, esperas explícitas.
+
+- Docker para automação: uso de imagens prontas como selenium/standalone-chrome, mapeamento de portas.
+
+- Tratamento de dados com Pandas: limpeza avançada, padronização, conversão de tipos, cálculos derivados.
+
+- Resolução de problemas complexos: identificação de elementos com IA, scroll progressivo, controle de duplicatas.
+
+- Documentação de portfólio: aprendi a importância de documentar também as dificuldades, não apenas o código final.
+
+- Autodidatismo: fui capaz de aprender uma tecnologia do zero em três dias, combinando múltiplas fontes.
+
+#### Para acessar o projeto basta clicar em: 
+[![View on GitHub](https://img.shields.io/badge/GitHub-View_on_GitHub-darkgreen?logo=GitHub)](https://github.com/surocham/Desafio_He4rt_Data)
 
 ---
 
-Entre em contato comigo por meio de:  
+Entre em contato comigo por meio de:
 
-[<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">](https://www.linkedin.com/in/surocham/) 
-[<img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail">](mailto:suamirochati@gmail.com) 
+[<img src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">](https://www.linkedin.com/in/surocham/)
+[<img src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=black" alt="Gmail">](mailto:suamirochati@gmail.com)
 
-
-© 2026 Suami Evelin Rocha de Medeiros. 
-
+© 2026 Suami Evelin Rocha de Medeiros.
