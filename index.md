@@ -10,7 +10,6 @@ Contribuí para entregas que resultaram em redução de aproximadamente 20% em e
 
 Busco oportunidades como Analista de Dados onde possa aplicar minha capacidade analítica, meu conhecimento técnico em dados e minha experiência com metodologias ágeis para gerar valor real ao negócio.
 
-Analitica de Dados | Data Analytics | Business Intelligence | BI | ETL | Tratamento de Dados | Limpeza de Dados | Data Cleaning | Visualizacao de Dados | Data Visualization | Dashboard | KPI | Metricas | Tomada de Decisao Baseada em Dados | Data-Driven | Storytelling com Dados | Analise Exploratoria | EDA | Pandas | NumPy | Power Query | DAX | SQL Server | PostgreSQL | MySQL | Relatorio Gerencial | Insights | Analista de Dados Junior | Junior Data Analyst | Transicao de Carreira em Dados | Scrum | Kanban | Metodologias Ageis
 
 ---
 
