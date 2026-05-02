@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Scraping Selenium — Suami Medeiros</title>
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: #F5F4EF; color: #2C1018; overflow-x: hidden; margin: 0; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(245,244,239,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); }
+.nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #C2185B; text-decoration: none; }
+.nav-links { display: flex; gap: 2rem; align-items: center; }
+.nav-links a { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6D2B40; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+.nav-links a:hover { color: #E91E8C; }
+.nav-cv { color: #E91E8C !important; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
+.nav-toggle span { display: block; width: 22px; height: 2px; background: #C2185B; border-radius: 2px; transition: all 0.3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.btn-primary { padding: 0.8rem 2rem; border-radius: 50px; background: #C2185B; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: none; cursor: pointer; display: inline-block; transition: background 0.2s, transform 0.15s; }
+.btn-primary:hover { background: #8B1A4A; transform: translateY(-1px); }
+.btn-outline { padding: 0.8rem 2rem; border-radius: 50px; background: transparent; color: #C2185B; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; text-decoration: none; border: 1.5px solid #C2185B; cursor: pointer; display: inline-block; transition: all 0.2s; }
+.btn-outline:hover { background: #FCE4EC; transform: translateY(-1px); }
+
+h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4vw, 4rem); line-height: 1.05; font-weight: 700; color: #2C1018; }
+h1 em { font-style: italic; color: #C2185B; }
+h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: #2C1018; }
+.chip { font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 6px; background: rgba(194,24,91,0.08); color: #8B1A4A; display: inline-block; }
+
+footer { background: #8B1A4A; padding: 1.5rem 5rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+footer p { font-size: 0.8rem; color: rgba(255,240,245,0.4); margin: 0; }
+
+.project-hero { min-height: 55vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 9rem 5rem 4rem; background: linear-gradient(160deg, #EDE8E0 0%, #F5F4EF 65%); position: relative; overflow: hidden; }
+.project-hero::after { content: '🕸️'; position: absolute; right: 5rem; top: 50%; transform: translateY(-50%); font-size: 14rem; opacity: 0.05; user-select: none; pointer-events: none; }
+.project-hero-inner { position: relative; z-index: 2; max-width: 760px; }
+.project-meta { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.meta-tag { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C2185B; font-weight: 500; background: #FCE4EC; border: 1px solid rgba(194,24,91,0.2); padding: 0.35rem 1rem; border-radius: 50px; }
+.meta-tag.secondary { background: white; color: #6D2B40; border-color: rgba(109,43,64,0.15); }
+.meta-dot { color: #A0536A; }
+.meta-date { font-size: 0.82rem; color: #A0536A; }
+.project-intro { font-size: 1.05rem; color: #6D2B40; line-height: 1.8; font-weight: 300; max-width: 640px; margin-top: 1rem; }
+
+.chips-row { display: flex; flex-wrap: wrap; gap: 0.6rem; padding: 1.5rem 5rem; background: white; border-bottom: 1px solid rgba(194,24,91,0.08); }
+
+.project-content { padding: 5rem; background: #F5F4EF; }
+.content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 5rem; align-items: start; }
+
+.prose-section { margin-bottom: 3rem; }
+.prose-section h3 { font-size: 1.1rem; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.7rem; }
+.prose-section h3::before { content: ''; display: block; width: 4px; height: 20px; background: #E91E8C; border-radius: 2px; flex-shrink: 0; }
+.prose-section p { font-size: 0.95rem; color: #6D2B40; line-height: 1.85; margin-bottom: 1rem; font-weight: 300; }
+.prose-section p strong { color: #2C1018; font-weight: 500; }
+
+.challenge-badge { display: inline-flex; align-items: center; gap: 0.6rem; background: #8B1A4A; color: white; border-radius: 50px; padding: 0.4rem 1rem; font-size: 0.75rem; font-weight: 500; margin-bottom: 1rem; }
+
+.step-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin: 1rem 0; }
+.step-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; background: white; border: 1px solid rgba(194,24,91,0.08); border-radius: 14px; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; background: #C2185B; color: white; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 500; flex-shrink: 0; }
+.step-text { font-size: 0.9rem; color: #6D2B40; line-height: 1.6; font-weight: 300; }
+.step-text strong { color: #2C1018; font-weight: 500; }
+
+.highlight-box { background: #FCE4EC; border-left: 3px solid #E91E8C; border-radius: 0 14px 14px 0; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+.highlight-box p { font-size: 0.88rem; color: #8B1A4A; margin: 0; font-style: italic; line-height: 1.7; }
+
+.data-sample { background: #2C1018; border-radius: 14px; padding: 1.2rem 1.5rem; margin: 1.5rem 0; overflow-x: auto; }
+.data-sample code { font-family: 'Courier New', monospace; font-size: 0.72rem; color: #F8BBD0; line-height: 1.9; display: block; white-space: pre; }
+.data-sample .label { color: rgba(255,255,255,0.35); }
+
+.sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.side-card { background: white; border: 1px solid rgba(194,24,91,0.1); border-radius: 20px; padding: 1.5rem; position: relative; overflow: hidden; }
+.side-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #E91E8C, #8B1A4A); }
+.side-card-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em; color: #C2185B; font-weight: 500; margin-bottom: 1rem; }
+.result-item { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.6rem 0; border-bottom: 1px solid rgba(194,24,91,0.06); font-size: 0.85rem; color: #6D2B40; line-height: 1.5; }
+.result-item:last-child { border-bottom: none; }
+.result-dot { width: 6px; height: 6px; border-radius: 50%; background: #E91E8C; flex-shrink: 0; margin-top: 6px; }
+.stat-row { display: flex; gap: 1rem; }
+.big-stat { text-align: center; padding: 0.5rem 0 1rem; flex: 1; }
+.big-stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #C2185B; line-height: 1; display: block; }
+.big-stat-label { font-size: 0.72rem; color: #A0536A; margin-top: 0.3rem; }
+
+.project-cta-bar { padding: 4rem 5rem; background: #FCE4EC; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+.cta-text h3 { margin-bottom: 0.4rem; }
+.cta-text p { font-size: 0.9rem; color: #6D2B40; }
+.cta-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 1024px) {
+  nav { padding: 1rem 2rem; }
+  .project-hero { padding: 8rem 3rem 3rem; }
+  .chips-row { padding: 1.2rem 3rem; }
+  .project-content { padding: 4rem 3rem; }
+  .project-cta-bar { padding: 3rem; }
+  footer { padding: 1.5rem 2rem; }
+}
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-toggle { display: flex; }
+  .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: rgba(245,244,239,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); padding: 0.5rem 0 1rem; }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 0.75rem 1.5rem; }
+  .project-hero { padding: 7rem 1.5rem 2.5rem; min-height: auto; }
+  .project-hero::after { display: none; }
+  .chips-row { padding: 1rem 1.5rem; }
+  .project-content { padding: 3rem 1.5rem; }
+  .content-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .project-cta-bar { padding: 2.5rem 1.5rem; flex-direction: column; align-items: flex-start; }
+  .cta-buttons { width: 100%; flex-direction: column; }
+  .cta-buttons .btn-primary, .cta-buttons .btn-outline { text-align: center; }
+  footer { flex-direction: column; gap: 0.4rem; padding: 1.5rem; text-align: center; }
+}
+@media (max-width: 480px) {
+  .project-hero { padding: 6.5rem 1.2rem 2rem; }
+  .chips-row { padding: 1rem 1.2rem; }
+  .project-content { padding: 2.5rem 1.2rem; }
+  .project-cta-bar { padding: 2rem 1.2rem; }
+  .data-sample code { font-size: 0.62rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">Suami Medeiros</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links" id="navLinks">
+    <a href="/#sobre">Sobre</a>
+    <a href="/#projetos">Projetos</a>
+    <a href="/#contato">Contato</a>
+    <a href="/assets/CV_Analista_Suami_Medeiros_2026.pdf" download class="nav-cv">Baixar CV</a>
+  </div>
+</nav>
+
+<div class="project-hero">
+  <div class="project-hero-inner">
+    <div class="project-meta">
+      <span class="meta-tag">Web Scraping</span>
+      <span class="meta-tag secondary">He4rt Developers</span>
+      <span class="meta-dot">·</span>
+      <span class="meta-date">Início de 2025</span>
+    </div>
+    <h1>Web Scraping com<br><em>Selenium WebDriver</em></h1>
+    <p class="project-intro">Scraper que extrai e estrutura dados públicos da folha de pagamento IPREM 2025 da Prefeitura de São Paulo — construído do zero em três dias para um desafio técnico da comunidade He4rt Developers.</p>
+  </div>
+</div>
+
+<div class="chips-row">
+  <span class="chip">Selenium WebDriver</span>
+  <span class="chip">Python</span>
+  <span class="chip">Pandas</span>
+  <span class="chip">Docker</span>
+  <span class="chip">XPath</span>
+  <span class="chip">CSS Selectors</span>
+  <span class="chip">ETL</span>
+  <span class="chip">Dados Públicos</span>
+  <span class="chip">SlickGrid</span>
+</div>
+
+<div class="project-content">
+  <div class="content-grid">
+
+    <div class="prose">
+      <div class="prose-section">
+        <h3>Contexto e Desafio</h3>
+        <div class="challenge-badge">🏆 Desafio He4rt Developers</div>
+        <p>No início de 2025, participei de um desafio técnico promovido pela <strong>He4rt Developers</strong>, uma das maiores comunidades de tecnologia do Brasil. O objetivo era construir um web scraper com Selenium WebDriver para extrair dados públicos do Portal da Transparência de uma prefeitura brasileira.</p>
+        <p>Eu nunca havia trabalhado com Selenium antes. Em poucos dias, aprendi a automatizar navegação em um site governamental, extrair uma tabela dinâmica e entregar um dataset limpo e documentado — avaliado por <strong>organização, boas práticas e uso de Docker</strong>.</p>
+      </div>
+
+      <div class="prose-section">
+        <h3>Requisitos Técnicos</h3>
+        <ul class="step-list">
+          <li class="step-item"><div class="step-num">1</div><div class="step-text"><strong>Selenium WebDriver obrigatório</strong> — linguagem livre, escolhi Python.</div></li>
+          <li class="step-item"><div class="step-num">2</div><div class="step-text"><strong>Extrair</strong> dados de pelo menos uma tabela com múltiplas linhas e colunas.</div></li>
+          <li class="step-item"><div class="step-num">3</div><div class="step-text"><strong>Limpeza e transformação</strong> dos dados: padronização e tratamento de inconsistências.</div></li>
+          <li class="step-item"><div class="step-num">4</div><div class="step-text"><strong>Salvar</strong> resultado final em CSV estruturado.</div></li>
+          <li class="step-item"><div class="step-num">★</div><div class="step-text"><strong>Bônus:</strong> Docker, scroll/paginação e padrão ETL no código.</div></li>
+        </ul>
+      </div>
+
+      <div class="prose-section">
+        <h3>O Desafio Técnico Real</h3>
+        <p>A escolha foi extrair a <strong>folha de pagamento IPREM 2025</strong> da Prefeitura de São Paulo. O principal obstáculo: a tabela era uma <strong>SlickGrid dinâmica</strong> renderizada dentro de um iframe com carregamento lento e assíncrono.</p>
+        <div class="highlight-box">
+          <p>Identificar elementos dentro de iframe com carregamento assíncrono exigiu esperas explícitas, scroll progressivo e seletores via XPath — habilidades aprendidas completamente do zero durante o projeto.</p>
+        </div>
+        <p>O código foi modularizado em funções separadas seguindo o padrão <strong>Extract, Transform e Load</strong>, com Docker usando a imagem selenium/standalone-chrome para total reprodutibilidade.</p>
+      </div>
+
+      <div class="prose-section">
+        <h3>Amostra dos Dados Extraídos</h3>
+        <div class="data-sample">
+          <code><span class="label">nome              </span>MARIA LENALDA DOS SANTOS SILVA
+<span class="label">cargo             </span>CHEFE DE EQUIPE I
+<span class="label">lotacao           </span>SEC MUN SAUDE
+<span class="label">total_remuneracao  </span>R$ 20.615,89
+<span class="label">---
+</span><span class="label">colunas_totais    </span>12
+<span class="label">validacao         </span>limpeza + deduplicação aplicadas</code>
+        </div>
+      </div>
+
+      <div class="prose-section">
+        <h3>Aprendizados e Competências</h3>
+        <p>Este projeto comprovou que sou capaz de <strong>aprender uma tecnologia do zero em três dias</strong> combinando documentação oficial, comunidade e experimentação prática. Competências consolidadas: web scraping com Selenium (seletores CSS/XPath, iframes, scroll dinâmico, esperas explícitas), Docker para automação, e tratamento avançado de dados com Pandas.</p>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="side-card">
+        <div class="stat-row">
+          <div class="big-stat"><span class="big-stat-num">3</span><div class="big-stat-label">Dias de desenvolvimento</div></div>
+          <div class="big-stat"><span class="big-stat-num">12</span><div class="big-stat-label">Colunas no dataset</div></div>
+        </div>
+      </div>
+      <div class="side-card">
+        <div class="side-card-title">Entregáveis Técnicos</div>
+        <div class="result-item"><div class="result-dot"></div>Scraper funcional extraindo folha IPREM 2025</div>
+        <div class="result-item"><div class="result-dot"></div>Dataset CSV com 12 colunas estruturadas</div>
+        <div class="result-item"><div class="result-dot"></div>Código Python modularizado em ETL</div>
+        <div class="result-item"><div class="result-dot"></div>Docker com selenium/standalone-chrome</div>
+        <div class="result-item"><div class="result-dot"></div>README com capturas e 8 commits</div>
+      </div>
+      <div class="side-card">
+        <div class="side-card-title">Validação dos Dados</div>
+        <div class="result-item"><div class="result-dot"></div>Padronização de strings</div>
+        <div class="result-item"><div class="result-dot"></div>Conversão de tipos e datas</div>
+        <div class="result-item"><div class="result-dot"></div>Remoção de duplicatas</div>
+        <div class="result-item"><div class="result-dot"></div>Tratamento de registros inconsistentes</div>
+        <div class="result-item"><div class="result-dot"></div>Cálculo automático de total_remuneracao</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="project-cta-bar">
+  <div class="cta-text">
+    <h3>Ver o projeto completo</h3>
+    <p>Repositório público com documentação, capturas de tela e histórico de commits.</p>
+  </div>
+  <div class="cta-buttons">
+    <a href="https://github.com/surocham/Desafio_He4rt_Data" target="_blank" class="btn-primary">Ver no GitHub →</a>
+    <a href="/#projetos" class="btn-outline">← Outros projetos</a>
+  </div>
+</div>
+
+<footer>
+  <p>© 2026 Suami Evelin Rocha de Medeiros</p>
+  <p>Feito com dados, código e muita atitude</p>
+</footer>
+
+<script>
+  var t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+  t.addEventListener('click', function() { t.classList.toggle('open'); l.classList.toggle('open'); });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+window.addEventListener('load', function() {
+  // Page entrance
+  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tl.from('nav', { y: -60, opacity: 0, duration: 0.6 })
+    .from('.project-meta', { x: -24, opacity: 0, duration: 0.5 }, '-=0.2')
+    .from('.project-hero h1', { y: 40, opacity: 0, duration: 0.7 }, '-=0.35')
+    .from('.project-intro', { y: 20, opacity: 0, duration: 0.5 }, '-=0.4')
+    .from('.chips-row .chip', { scale: 0.6, opacity: 0, duration: 0.3, stagger: 0.06, ease: 'back.out(2)' }, '-=0.2');
+
+  // Prose sections scroll in
+  gsap.utils.toArray('.prose-section').forEach(function(section, i) {
+    gsap.from(section, {
+      scrollTrigger: { trigger: section, start: 'top 82%' },
+      y: 32, opacity: 0, duration: 0.55, delay: i * 0.05
+    });
+  });
+
+  // Step items stagger
+  gsap.from('.step-item', {
+    scrollTrigger: { trigger: '.step-list', start: 'top 84%' },
+    x: -24, opacity: 0, duration: 0.45, stagger: 0.1, ease: 'power2.out'
+  });
+
+  // Sidebar cards
+  gsap.from('.side-card', {
+    scrollTrigger: { trigger: '.sidebar', start: 'top 82%' },
+    y: 30, opacity: 0, duration: 0.5, stagger: 0.15, ease: 'back.out(1.4)'
+  });
+
+  // Result items
+  gsap.from('.result-item', {
+    scrollTrigger: { trigger: '.sidebar', start: 'top 75%' },
+    x: 16, opacity: 0, duration: 0.35, stagger: 0.08
+  });
+
+  // CTA bar
+  gsap.from('.project-cta-bar', {
+    scrollTrigger: { trigger: '.project-cta-bar', start: 'top 88%' },
+    y: 24, opacity: 0, duration: 0.5
+  });
+  gsap.from('.cta-buttons a', {
+    scrollTrigger: { trigger: '.cta-buttons', start: 'top 88%' },
+    y: 16, opacity: 0, duration: 0.4, stagger: 0.12, ease: 'back.out(1.8)'
+  });
+
+  // Highlight box
+  if (document.querySelector('.highlight-box')) {
+    gsap.from('.highlight-box', {
+      scrollTrigger: { trigger: '.highlight-box', start: 'top 85%' },
+      x: -20, opacity: 0, duration: 0.5
+    });
+  }
+
+  // Big stat counter
+  document.querySelectorAll('.big-stat-num').forEach(function(el) {
+    var raw = el.textContent.trim();
+    var num = parseFloat(raw);
+    if (!isNaN(num)) {
+      var obj = { val: 0 };
+      gsap.to(obj, {
+        val: num, duration: 1.8, ease: 'power2.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+        onUpdate: function() {
+          el.textContent = Number.isInteger(num) ? Math.round(obj.val) : obj.val.toFixed(0);
+        }
+      });
+    }
+  });
+
+  // Nav shrink on scroll
+  ScrollTrigger.create({
+    start: 'top -60',
+    onEnter: function() { gsap.to('nav', { padding: '0.6rem 3rem', duration: 0.3 }); },
+    onLeaveBack: function() { gsap.to('nav', { padding: '1rem 3rem', duration: 0.3 }); }
+  });
+});
+</script>
+
+</body>
+</html>

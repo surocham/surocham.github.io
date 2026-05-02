@@ -1,99 +1,672 @@
 <!DOCTYPE html>
-<html lang="{{ site.lang | default: 'en-US' }}">
+<html lang="pt-BR">
 <head>
-   {% if site.google_analytics %}
-   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-   <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      
-      gtag('config', '{{ site.google_analytics }}');
-   </script>
-   {% endif %}
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   {% seo %}
-   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-   <link rel="stylesheet" href="{{ "/assets/css/style.css?v=" | append: site.github.build_revision | relative_url }}">
- <style>
-      .wrapper {
-         width: 870px !important;
-         margin: 0 auto !important;
-         padding: 0;
-      }
-    
-      header {
-         width: 300px !important;
-         position: fixed !important;
-         -webkit-font-smoothing: subpixel-antialiased !important;
-         overflow: visible !important;
-      }
+  {% if site.google_analytics %}
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  
+  {% endif %}
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% seo %}
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <title>Suami Medeiros — Analista de Dados</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: #F5F4EF; color: #2C1018; overflow-x: hidden; margin: 0; }
 
-      footer {
-         width: 300px !important;
-         position: fixed !important;
-         bottom: 50px !important;
-      }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(245,244,239,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #C2185B; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6D2B40; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #E91E8C; }
+    .nav-cv { color: #E91E8C !important; }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
+    .nav-toggle span { display: block; width: 22px; height: 2px; background: #C2185B; border-radius: 2px; transition: all 0.3s; }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-      /* Evitar duplicação de conteúdo */
-      .content-wrapper {
-         overflow: hidden !important;
-      }
+    /* BUTTONS */
+    .btn-primary { padding: 0.8rem 2rem; border-radius: 50px; background: #C2185B; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
+    .btn-primary:hover { background: #8B1A4A; transform: translateY(-1px); }
+    .btn-outline { padding: 0.8rem 2rem; border-radius: 50px; background: transparent; color: #C2185B; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; border: 1.5px solid #C2185B; cursor: pointer; transition: all 0.2s; display: inline-block; }
+    .btn-outline:hover { background: #FCE4EC; transform: translateY(-1px); }
 
-      @media print, screen and (max-width: 960px) {
-         div.wrapper {
-            width: auto !important;
-            margin: 0 !important;
-            padding: 0px !important;
-         }
+    /* TYPOGRAPHY */
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1.05; font-weight: 700; color: #2C1018; }
+    h1 em { font-style: italic; color: #C2185B; }
+    h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #2C1018; line-height: 1.1; }
+    h2 em { font-style: italic; color: #C2185B; }
+    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #2C1018; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #E91E8C; font-weight: 500; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: #E91E8C; }
+    .deco-line { width: 60px; height: 2px; background: linear-gradient(90deg, #E91E8C, transparent); margin-top: 1.5rem; margin-bottom: 2.5rem; }
+    .chip { font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 6px; background: rgba(194,24,91,0.08); color: #8B1A4A; display: inline-block; }
 
-         header, footer {
-            float: none !important;
-            position: static !important;
-            width: auto !important;
-         }
-      }
-   </style>
-   <!--[if lt IE 9]>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
-   <![endif]-->
+    /* HERO */
+    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem 5rem; position: relative; z-index: 2; }
+    .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #E91E8C; font-weight: 500; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.75rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #E91E8C; }
+    .hero-tagline { font-size: 1.05rem; color: #6D2B40; line-height: 1.7; max-width: 420px; margin: 1.5rem 0 2.5rem; font-weight: 300; }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hero-right { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #F5F4EF; }
+    .hero-blob { position: absolute; width: 72%; height: 72%; border-radius: 50%; background: radial-gradient(ellipse at center, #EDE0E5 0%, #E4D0D8 50%, transparent 72%); top: 14%; left: 14%; }
+    .hero-photo-wrap { position: relative; z-index: 2; width: 300px; height: 380px; }
+    .hero-photo-bg { position: absolute; inset: 20px 0 0 20px; border-radius: 60% 40% 50% 50% / 50% 40% 60% 50%; background: #C2185B; opacity: 0.12; }
+    .hero-photo-inner { position: absolute; inset: 0; border-radius: 55% 45% 48% 52% / 48% 42% 58% 52%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #EDD8DF; }
+    .hero-photo-inner img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+    .hero-badge { position: absolute; bottom: 30px; right: -8px; background: white; border: 1.5px solid rgba(194,24,91,0.15); border-radius: 16px; padding: 0.8rem 1.2rem; z-index: 3; }
+    .badge-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #C2185B; line-height: 1; }
+    .badge-label { font-size: 0.7rem; color: #A0536A; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+    .hero-badge2 { position: absolute; top: 60px; left: -18px; background: #C2185B; border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; }
+    .badge2-text { font-size: 0.72rem; color: white; font-weight: 500; letter-spacing: 0.05em; }
+
+    /* SKILLS STRIP */
+    .skills-strip { background: #C2185B; padding: 1.2rem 0; overflow: hidden; }
+    .skills-scroll { display: flex; gap: 3rem; align-items: center; animation: scroll-left 22s linear infinite; white-space: nowrap; }
+    @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    .skill-pill { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.9); font-weight: 500; display: flex; align-items: center; gap: 0.6rem; }
+    .skill-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+
+    /* SOBRE */
+    #sobre { padding: 6rem 5rem; background: #F5F4EF; }
+    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-text p { font-size: 1rem; color: #6D2B40; line-height: 1.8; margin-bottom: 1rem; font-weight: 300; }
+    .about-text strong { color: #2C1018; font-weight: 500; }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .stat-card { padding: 1.5rem; background: white; border: 1px solid rgba(194,24,91,0.1); border-radius: 20px; position: relative; overflow: hidden; }
+    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #E91E8C, #8B1A4A); }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: #C2185B; line-height: 1; margin-bottom: 0.3rem; }
+    .stat-desc { font-size: 0.82rem; color: #A0536A; line-height: 1.5; }
+    .tools-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .tool-tag { padding: 0.5rem 1.2rem; border-radius: 50px; border: 1.5px solid rgba(194,24,91,0.2); font-size: 0.82rem; color: #6D2B40; font-weight: 500; background: white; transition: all 0.2s; }
+    .tool-tag:hover { background: #FCE4EC; border-color: #C2185B; color: #8B1A4A; }
+    .tool-tag.featured { background: #C2185B; color: white; border-color: #C2185B; }
+
+    /* PROJETOS */
+    #projetos { padding: 6rem 5rem; background: white; }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
+    .project-card { border: 1px solid rgba(194,24,91,0.1); border-radius: 24px; overflow: hidden; background: #F5F4EF; text-decoration: none; display: block; transition: transform 0.25s, box-shadow 0.25s; }
+    .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(194,24,91,0.12); }
+    .project-header { padding: 2rem; background: linear-gradient(135deg, #EDE0E5, white); display: flex; align-items: center; justify-content: space-between; }
+    .project-img { width: 100%; height: 160px; object-fit: cover; display: block; }
+    .project-icon { width: 52px; height: 52px; border-radius: 14px; background: #C2185B; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .project-tag { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C2185B; font-weight: 500; background: white; border: 1px solid rgba(194,24,91,0.2); padding: 0.3rem 0.8rem; border-radius: 50px; }
+    .project-body { padding: 1.5rem 2rem 2rem; }
+    .project-body h3 { margin-bottom: 0.75rem; }
+    .project-body p { font-size: 0.88rem; color: #6D2B40; line-height: 1.7; margin-bottom: 1.2rem; font-weight: 300; }
+    .project-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .project-cta { font-size: 0.82rem; font-weight: 500; color: #C2185B; display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; padding: 0.6rem 1.4rem; border-radius: 50px; border: 1.5px solid #C2185B; transition: all 0.2s; }
+    .project-cta:hover { background: #C2185B; color: white; }
+
+    /* CONTATO */
+    #contato { padding: 6rem 5rem; background: #8B1A4A; }
+    #contato .section-label { color: rgba(255,240,245,0.7); }
+    #contato .section-label::before { background: rgba(255,240,245,0.5); }
+    #contato h2 { color: white; }
+    #contato h2 em { color: #F8BBD0; }
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .contact-copy { font-size: 1rem; color: rgba(255,240,245,0.75); line-height: 1.8; font-weight: 300; margin-top: 1rem; }
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-radius: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); text-decoration: none; color: white; transition: background 0.2s; font-size: 0.9rem; }
+    .contact-link:hover { background: rgba(255,255,255,0.15); }
+    .link-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; color: white; font-weight: 500; }
+    .link-meta { display: flex; flex-direction: column; }
+    .link-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,240,245,0.5); }
+    .link-value { font-size: 0.9rem; color: rgba(255,240,245,0.9); }
+
+    /* FOOTER */
+    footer { background: #8B1A4A; padding: 1.5rem 5rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+    footer p { font-size: 0.8rem; color: rgba(255,240,245,0.4); margin: 0; }
+
+    /* TABLET */
+    @media (max-width: 1024px) {
+      nav { padding: 1rem 2rem; }
+      .hero-left { padding: 7rem 2.5rem 3rem 3rem; }
+      #sobre, #projetos, #contato { padding: 5rem 3rem; }
+      .about { gap: 3rem; }
+      .contact-layout { gap: 3rem; }
+      footer { padding: 1.5rem 2rem; }
+    }
+    /* MOBILE */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-toggle { display: flex; }
+      .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: rgba(245,244,239,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); padding: 0.5rem 0 1rem; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 0.75rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { padding: 6rem 1.5rem 3rem; align-items: center; text-align: center; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-tagline { text-align: center; max-width: 100%; }
+      .hero-ctas { justify-content: center; }
+      .hero-right { display: none; }
+      #sobre, #projetos, #contato { padding: 4rem 1.5rem; }
+      .about { grid-template-columns: 1fr; gap: 2.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
+      footer { flex-direction: column; gap: 0.4rem; padding: 1.5rem; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero-left { padding: 5.5rem 1.2rem 2.5rem; }
+      #sobre, #projetos, #contato { padding: 3rem 1.2rem; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .stat-num { font-size: 2rem; }
+      .hero-ctas { flex-direction: column; width: 100%; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; }
+      .project-header { padding: 1.2rem; }
+      .project-body { padding: 1.2rem; }
+      footer { padding: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
-   <div class="wrapper">
-      <header>
-         <h1 style="text-align:center;"><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
-         {% if site.logo %}
-         <!-- Aqui está a modificação da imagem de perfil com o estilo inline -->
-         <img src="{{ site.logo | relative_url }}" alt="Foto de Perfil" style="width:220px; height:auto; border-radius:50%; display: block; margin: 0 auto;" />
-         {% endif %}
-         
-         <!-- Modificação para permitir textos longos -->
-         <p style="text-align: justify; font-size: 16px; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 10px; height: auto; overflow: visible;">
-            {{ site.description | default: site.github.project_tagline }}
-         </p>
 
-         {% if site.github.is_project_page %}
-         <p class="view"><a href="{{ site.github.repository_url }}">View the Project on GitHub <small>{{ site.github.repository_nwo }}</small></a></p>
-         {% endif %}
-         {% if site.show_downloads %}
-         <ul class="downloads">
-            <li><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></li>
-            <li><a href="{{ site.github.tar_url }}">Download <strong>TAR Ball</strong></a></li>
-            <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
-         </ul>
-         {% endif %}
-      </header>
-     <section>
-         {{ content }}
-      </section>
-      <footer>
-         {% if site.github.is_project_page %}
-         <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a></p>
-         {% endif %}
-      </footer>
-   </div>
-   <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
+<nav>
+  <a href="#inicio" class="nav-logo">Suami Medeiros</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="nav-links" id="navLinks">
+    <a href="#sobre">Sobre</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#youtube">YouTube</a>
+    <a href="#artigos">Artigos</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#contato">Contato</a>
+    <a href="/assets/CV_Analista_Suami_Medeiros_2026.pdf" download class="nav-cv">Baixar CV</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Analista de Dados</div>
+    <h1>Suami<br><em>Medeiros</em></h1>
+    <p class="hero-tagline">Transformo dados brutos em decisões estratégicas — com precisão técnica, visão analítica e uma pitada de atitude.</p>
+    <div class="hero-ctas">
+      <a href="#projetos" class="btn-primary">Ver projetos</a>
+      <a href="#contato" class="btn-outline">Entre em contato</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-blob"></div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-bg"></div>
+      <div class="hero-photo-inner">
+        <img src="../assets/portfolio.png" alt="Suami Medeiros">
+      </div>
+      <div class="hero-badge">
+        <div class="badge-num">20%</div>
+        <div class="badge-label">Redução de erros</div>
+      </div>
+      <div class="hero-badge2">
+        <div class="badge2-text">SQL · Python · Power BI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS STRIP -->
+<div class="skills-strip">
+  <div class="skills-scroll">
+    <span class="skill-pill"><span class="skill-dot"></span>SQL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Python</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Power BI</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Apache Airflow</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Docker</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Selenium</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Pandas</span>
+    <span class="skill-pill"><span class="skill-dot"></span>PostgreSQL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>ETL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Web Scraping</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Excel</span>
+    <span class="skill-pill"><span class="skill-dot"></span>SQL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Python</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Power BI</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Apache Airflow</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Docker</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Selenium</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Pandas</span>
+    <span class="skill-pill"><span class="skill-dot"></span>PostgreSQL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>ETL</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Web Scraping</span>
+    <span class="skill-pill"><span class="skill-dot"></span>Excel</span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="about">
+    <div class="about-text">
+      <div class="section-label">Sobre mim</div>
+      <h2>Dados com <em>propósito</em></h2>
+      <div class="deco-line"></div>
+      <p>Profissional em transição para a área de dados, com experiência prática em análise, organização e interpretação de dados voltados à tomada de decisão.</p>
+      <p>Ao longo da minha trajetória como <strong>desenvolvedora mobile</strong>, desenvolvi uma visão analítica apurada — trabalhando diretamente com dados de uso de aplicações, métricas de performance e ciclos de entrega orientados a resultado.</p>
+      <p>Tenho facilidade para <strong>comunicar insights</strong> a públicos técnicos e não técnicos, habilidade desenvolvida em projetos com clientes e times multidisciplinares.</p>
+      <div class="tools-grid">
+        <span class="tool-tag featured">SQL</span>
+        <span class="tool-tag featured">Python</span>
+        <span class="tool-tag featured">Power BI</span>
+        <span class="tool-tag">Excel</span>
+        <span class="tool-tag">Airflow</span>
+        <span class="tool-tag">Docker</span>
+        <span class="tool-tag">Selenium</span>
+        <span class="tool-tag">Pandas</span>
+        <span class="tool-tag">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card"><div class="stat-num">20%</div><div class="stat-desc">Redução em erros recorrentes em aplicações mobile</div></div>
+      <div class="stat-card"><div class="stat-num">10+</div><div class="stat-desc">Funcionalidades entregues dentro do prazo e escopo</div></div>
+      <div class="stat-card"><div class="stat-num">91</div><div class="stat-desc">Registros migrados com 100% de integridade no pipeline ETL</div></div>
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-desc">Colunas estruturadas no dataset de web scraping público</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETOS -->
+<section id="projetos">
+  <div class="section-label">Portfólio</div>
+  <h2>Projetos <em>em destaque</em></h2>
+  <div class="deco-line"></div>
+  <div class="projects-grid">
+
+    <div class="project-card">
+      <div class="project-header" style="padding: 3rem 2rem;">
+        <div class="project-icon">🛫</div>
+        <span class="project-tag">Engenharia de Dados</span>
+      </div>
+      <div class="project-body">
+        <h3>Pipeline ETL com Airflow e Docker</h3>
+        <p>Pipeline automatizado que extrai dados de um PostgreSQL fonte, valida integridade e carrega no banco de destino — agendado diariamente, zero intervenção manual. 91 registros migrados com 100% de integridade.</p>
+        <div class="project-chips">
+          <span class="chip">Apache Airflow</span><span class="chip">Docker</span><span class="chip">PostgreSQL</span><span class="chip">Python</span><span class="chip">ETL</span>
+        </div>
+        <a href="/projeto-etl.html" class="project-cta">Ver projeto completo →</a>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-header" style="padding: 3rem 2rem;">
+        <div class="project-icon">🤖</div>
+        <span class="project-tag">Web Scraping</span>
+      </div>
+      <div class="project-body">
+        <h3>Web Scraping com Selenium — Folha de Pagamento SP</h3>
+        <p>Scraper que extrai a folha de pagamento IPREM 2025 da Prefeitura de São Paulo de uma tabela dinâmica (SlickGrid/iframe). Dataset com 12 colunas, limpeza e padronização completas. Desenvolvido do zero em 3 dias.</p>
+        <div class="project-chips">
+          <span class="chip">Selenium</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Docker</span><span class="chip">XPath</span>
+        </div>
+        <a href="/projeto-scraping.html" class="project-cta">Ver projeto completo →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTATO -->
+
+<!-- YOUTUBE -->
+<section id="youtube" style="padding: 6rem 5rem; background: #F5F4EF;">
+  <div class="section-label">Conteúdo</div>
+  <h2>No <em>YouTube</em></h2>
+  <div class="deco-line"></div>
+  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:2.5rem; line-height:1.8;">
+    Compartilho minha jornada em dados — projetos reais, ferramentas, carreira e bastidores do dia a dia de quem está em transição.
+  </p>
+  <div id="yt-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin-bottom:2rem;">
+    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
+      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
+      </div>
+      <div style="padding:1rem 1.2rem 1.4rem;">
+        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
+        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:60%;"></div>
+      </div>
+    </div>
+    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
+      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
+      </div>
+      <div style="padding:1rem 1.2rem 1.4rem;">
+        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
+        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:75%;"></div>
+      </div>
+    </div>
+    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
+      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
+      </div>
+      <div style="padding:1rem 1.2rem 1.4rem;">
+        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
+        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:50%;"></div>
+      </div>
+    </div>
+  </div>
+  <a href="https://www.youtube.com/@SuamiMedeiros-Data" target="_blank" class="btn-outline" style="display:inline-flex; align-items:center; gap:0.6rem;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14.5 4.5s-.18-1.26-.72-1.81c-.69-.72-1.46-.73-1.81-.77C10.48 1.8 8 1.8 8 1.8s-2.48 0-3.97.12c-.35.04-1.12.05-1.81.77C1.68 3.24 1.5 4.5 1.5 4.5S1.3 5.98 1.3 7.46v1.39c0 1.48.2 2.96.2 2.96s.18 1.26.72 1.81c.69.72 1.6.7 2 .77 1.45.14 6.15.18 6.15.18s2.48 0 3.97-.13c.35-.04 1.12-.05 1.81-.77.54-.55.72-1.81.72-1.81s.2-1.48.2-2.96V7.46c0-1.48-.2-2.96-.2-2.96zM6.55 9.82V5.58l4.9 2.13-4.9 2.11z" fill="#C2185B"/></svg>
+    Ver canal no YouTube
+  </a>
+</section>
+
+<!-- ARTIGOS SUBSTACK -->
+<section id="artigos" style="padding: 6rem 5rem; background: white;">
+  <div class="section-label">Escrita</div>
+  <h2>Artigos no <em>Substack</em></h2>
+  <div class="deco-line"></div>
+  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:2.5rem; line-height:1.8;">
+    Escrevo sobre dados, carreira e aprendizados reais da minha jornada. Sem filtro, sem guru.
+  </p>
+  <div id="substack-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; margin-bottom:2rem;">
+    <!-- Articles loaded by JS via RSS -->
+    <div class="article-skeleton" style="background:#F5F4EF; border:1px solid rgba(194,24,91,0.08); border-radius:16px; padding:1.8rem;">
+      <div style="width:60px; height:6px; background:#EDE0E5; border-radius:3px; margin-bottom:1rem;"></div>
+      <div style="height:14px; background:#EDE0E5; border-radius:4px; margin-bottom:8px;"></div>
+      <div style="height:14px; background:#F0E6EA; border-radius:4px; width:80%; margin-bottom:1.2rem;"></div>
+      <div style="height:10px; background:#F5EDF0; border-radius:3px; margin-bottom:6px;"></div>
+      <div style="height:10px; background:#F5EDF0; border-radius:3px; width:70%;"></div>
+    </div>
+    <div class="article-skeleton" style="background:#F5F4EF; border:1px solid rgba(194,24,91,0.08); border-radius:16px; padding:1.8rem;">
+      <div style="width:60px; height:6px; background:#EDE0E5; border-radius:3px; margin-bottom:1rem;"></div>
+      <div style="height:14px; background:#EDE0E5; border-radius:4px; margin-bottom:8px;"></div>
+      <div style="height:14px; background:#F0E6EA; border-radius:4px; width:90%; margin-bottom:1.2rem;"></div>
+      <div style="height:10px; background:#F5EDF0; border-radius:3px; margin-bottom:6px;"></div>
+      <div style="height:10px; background:#F5EDF0; border-radius:3px; width:55%;"></div>
+    </div>
+  </div>
+  <a href="https://suamirocham.substack.com" target="_blank" class="btn-outline" style="display:inline-flex; align-items:center; gap:0.6rem;">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3h12v1.5H2V3zm0 3.5h12V8H2V6.5zM2 10h7v1.5H2V10z" fill="#C2185B"/></svg>
+    Ler no Substack
+  </a>
+</section>
+
+<!-- PRODUTOS -->
+<section id="produtos" style="padding: 6rem 5rem; background: #F5F4EF;">
+  <div class="section-label">Produtos</div>
+  <h2>O que estou <em>construindo</em></h2>
+  <div class="deco-line"></div>
+  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:3rem; line-height:1.8;">
+    Além de dados, construo ferramentas que resolvem problemas reais — com Lovable e Supabase.
+  </p>
+  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
+
+    <!-- Junty -->
+    <div class="produto-card" style="background:white; border:1px solid rgba(194,24,91,0.1); border-radius:24px; overflow:hidden; position:relative;">
+      <div style="padding:2rem 2rem 1.5rem; background:linear-gradient(135deg,#EDE0E5,white);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+          <div style="width:52px; height:52px; border-radius:14px; background:#C2185B; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <rect x="3" y="5" width="20" height="16" rx="3" stroke="white" stroke-width="1.8"/>
+              <path d="M3 10h20" stroke="white" stroke-width="1.8"/>
+              <circle cx="8" cy="15" r="1.5" fill="white"/>
+              <circle cx="13" cy="15" r="1.5" fill="white"/>
+              <circle cx="18" cy="15" r="1.5" fill="white"/>
+            </svg>
+          </div>
+          <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; background:#FCE4EC; color:#C2185B; border:1px solid rgba(194,24,91,0.2); padding:0.25rem 0.8rem; border-radius:50px; font-weight:500;">Em desenvolvimento</span>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#2C1018; margin-bottom:0.5rem;">Junty</h3>
+        <p style="font-size:0.82rem; color:#C2185B; font-weight:500; letter-spacing:0.05em;">Scheduling inteligente</p>
+      </div>
+      <div style="padding:1.2rem 2rem 2rem;">
+        <p style="font-size:0.9rem; color:#6D2B40; line-height:1.7; font-weight:300; margin-bottom:1.5rem;">
+          Encontra o melhor horário para reuniões considerando a disponibilidade de todos os participantes e envia os convites por e-mail automaticamente.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem;">
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Lovable</span>
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Supabase</span>
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Email API</span>
+        </div>
+        <span style="font-size:0.82rem; color:#A0536A; display:flex; align-items:center; gap:0.5rem;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#A0536A" stroke-width="1.3"/><path d="M7 4v3.5l2 1.5" stroke="#A0536A" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Em breve
+        </span>
+      </div>
+    </div>
+
+    <!-- Testyme -->
+    <div class="produto-card" style="background:white; border:1px solid rgba(194,24,91,0.1); border-radius:24px; overflow:hidden; position:relative;">
+      <div style="padding:2rem 2rem 1.5rem; background:linear-gradient(135deg,#EDE0E5,white);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
+          <div style="width:52px; height:52px; border-radius:14px; background:#C2185B; display:flex; align-items:center; justify-content:center;">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M7 5h12a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="white" stroke-width="1.8"/>
+              <path d="M9 11l2.5 2.5L17 9" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; background:#FCE4EC; color:#C2185B; border:1px solid rgba(194,24,91,0.2); padding:0.25rem 0.8rem; border-radius:50px; font-weight:500;">Em desenvolvimento</span>
+        </div>
+        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#2C1018; margin-bottom:0.5rem;">Testyme</h3>
+        <p style="font-size:0.82rem; color:#C2185B; font-weight:500; letter-spacing:0.05em;">Prepare-se para qualquer entrevista</p>
+      </div>
+      <div style="padding:1.2rem 2rem 2rem;">
+        <p style="font-size:0.9rem; color:#6D2B40; line-height:1.7; font-weight:300; margin-bottom:1.5rem;">
+          Testes de código, criação de portfólio guiado e simulações de entrevista com IA — tudo que você precisa para conquistar sua vaga em tech.
+        </p>
+        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem;">
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Lovable</span>
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Supabase</span>
+          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">IA</span>
+        </div>
+        <span style="font-size:0.82rem; color:#A0536A; display:flex; align-items:center; gap:0.5rem;">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#A0536A" stroke-width="1.3"/><path d="M7 4v3.5l2 1.5" stroke="#A0536A" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Em breve
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contato">
+  <div class="contact-layout">
+    <div>
+      <div class="section-label">Vamos conversar</div>
+      <h2>Pronta para o <em>próximo desafio</em></h2>
+      <p class="contact-copy">Busco oportunidades como Analista de Dados onde possa aplicar minha capacidade analítica, conhecimento técnico e experiência com metodologias ágeis para gerar valor real ao negócio.</p>
+    </div>
+    <div class="contact-links">
+      <a href="https://www.linkedin.com/in/surocham/" class="contact-link" target="_blank">
+        <div class="link-icon">in</div>
+        <div class="link-meta"><span class="link-label">LinkedIn</span><span class="link-value">linkedin.com/in/surocham</span></div>
+      </a>
+      <a href="mailto:suamirochati@gmail.com" class="contact-link">
+        <div class="link-icon">✉</div>
+        <div class="link-meta"><span class="link-label">E-mail</span><span class="link-value">suamirochati@gmail.com</span></div>
+      </a>
+      <a href="https://github.com/surocham" class="contact-link" target="_blank">
+        <div class="link-icon">gh</div>
+        <div class="link-meta"><span class="link-label">GitHub</span><span class="link-value">github.com/surocham</span></div>
+      </a>
+      <a href="/assets/CV_Analista_Suami_Medeiros_2026.pdf" class="contact-link" download>
+        <div class="link-icon">↓</div>
+        <div class="link-meta"><span class="link-label">Currículo</span><span class="link-value">Baixar CV em PDF</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Suami Evelin Rocha de Medeiros</p>
+  <p>Feito com dados, código e muita atitude</p>
+</footer>
+
+
+
+
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Hamburger
+var navT = document.getElementById('navToggle');
+var navL = document.getElementById('navLinks');
+if (navT) {
+  navT.addEventListener('click', function() {
+    navT.classList.toggle('open');
+    navL.classList.toggle('open');
+  });
+  navL.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      navT.classList.remove('open');
+      navL.classList.remove('open');
+    });
+  });
+}
+
+// RSS Substack
+fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://suamirocham.substack.com/feed'))
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var parser = new DOMParser();
+    var xml = parser.parseFromString(data.contents, 'text/xml');
+    var items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
+    var grid = document.getElementById('substack-grid');
+    if (!items.length || !grid) return;
+    grid.innerHTML = '';
+    items.forEach(function(item) {
+      var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
+      var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
+      var desc = item.querySelector('description') ? item.querySelector('description').textContent.replace(/<[^>]*>/g, '').slice(0, 120) + '...' : '';
+      var date = item.querySelector('pubDate') ? new Date(item.querySelector('pubDate').textContent).toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) : '';
+      var a = document.createElement('a');
+      a.href = link;
+      a.target = '_blank';
+      a.style.cssText = 'background:#F5F4EF;border:1px solid rgba(194,24,91,0.1);border-radius:16px;padding:1.8rem;text-decoration:none;display:block;transition:transform 0.2s;';
+      a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
+      a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
+      a.innerHTML = '<div style="font-size:0.68rem;color:#A0536A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">' + date + '</div>'
+        + '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;color:#2C1018;margin-bottom:0.8rem;line-height:1.4;">' + title + '</h3>'
+        + '<p style="font-size:0.85rem;color:#6D2B40;line-height:1.6;font-weight:300;margin-bottom:1rem;">' + desc + '</p>'
+        + '<span style="font-size:0.8rem;font-weight:500;color:#C2185B;">Ler artigo \u2192</span>';
+      grid.appendChild(a);
+    });
+  })
+  .catch(function() {});
+
+// RSS YouTube
+fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UCqZ7HjjJFRb8VfCVKZtN8Sg'))
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var parser = new DOMParser();
+    var xml = parser.parseFromString(data.contents, 'text/xml');
+    var entries = Array.from(xml.querySelectorAll('entry')).slice(0, 3);
+    var grid = document.getElementById('yt-grid');
+    if (!entries.length || !grid) return;
+    grid.innerHTML = '';
+    entries.forEach(function(entry) {
+      var title = entry.querySelector('title') ? entry.querySelector('title').textContent : '';
+      var videoId = entry.querySelector('videoId') ? entry.querySelector('videoId').textContent : '';
+      if (!videoId) {
+        var idEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015', 'videoId')[0];
+        if (idEl) videoId = idEl.textContent;
+      }
+      var link = 'https://www.youtube.com/watch?v=' + videoId;
+      var thumb = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
+      var a = document.createElement('a');
+      a.href = link;
+      a.target = '_blank';
+      a.style.cssText = 'border-radius:16px;overflow:hidden;background:white;border:1px solid rgba(194,24,91,0.08);text-decoration:none;display:block;transition:transform 0.2s;';
+      a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
+      a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
+      a.innerHTML = '<div style="position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;">'
+        + '<img src="' + thumb + '" style="width:100%;height:100%;object-fit:cover;" alt="' + title + '">'
+        + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(194,24,91,0.15);">'
+        + '<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(194,24,91,0.85)"/><polygon points="19,16 35,24 19,32" fill="white"/></svg>'
+        + '</div></div>'
+        + '<div style="padding:1rem 1.2rem 1.4rem;">'
+        + '<p style="font-size:0.88rem;font-weight:500;color:#2C1018;line-height:1.5;">' + title + '</p>'
+        + '</div>';
+      grid.appendChild(a);
+    });
+  })
+  .catch(function() {});
+
+window.addEventListener('load', function() {
+  // Hero
+  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+  tl.from('nav', { y: -60, opacity: 0, duration: 0.7 })
+    .from('.hero-eyebrow', { x: -30, opacity: 0, duration: 0.5 }, '-=0.3')
+    .from('h1', { y: 40, opacity: 0, duration: 0.7 }, '-=0.3')
+    .from('.hero-tagline', { y: 24, opacity: 0, duration: 0.5 }, '-=0.4')
+    .from('.hero-ctas .btn-primary', { x: -20, opacity: 0, duration: 0.4 }, '-=0.3')
+    .from('.hero-ctas .btn-outline', { x: -20, opacity: 0, duration: 0.4 }, '-=0.25')
+    .from('.hero-photo-wrap', { scale: 0.85, opacity: 0, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.7')
+    .from('.hero-badge', { x: 30, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.3')
+    .from('.hero-badge2', { x: -30, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.4')
+    .from('.skills-strip', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2');
+
+  // Floating badges
+  gsap.to('.hero-badge', { y: -8, duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
+  gsap.to('.hero-badge2', { y: 6, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 0.5 });
+
+  // Sobre
+  gsap.from('#sobre h2', { scrollTrigger: { trigger: '#sobre', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('.about-text p', { scrollTrigger: { trigger: '.about-text', start: 'top 82%' }, y: 20, opacity: 0, duration: 0.5, stagger: 0.12 });
+  gsap.from('.tool-tag', { scrollTrigger: { trigger: '.tools-grid', start: 'top 86%' }, scale: 0.7, opacity: 0, duration: 0.35, stagger: 0.05, ease: 'back.out(2)' });
+  gsap.from('.stat-card', { scrollTrigger: { trigger: '.about-stats', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'back.out(1.4)' });
+
+  // Stat counters
+  var targets = [20, 10, 91, 12];
+  var suffixes = ['%', '+', '', ''];
+  document.querySelectorAll('.stat-num').forEach(function(el, i) {
+    var obj = { val: 0 };
+    gsap.to(obj, {
+      val: targets[i], duration: 1.6, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+      onUpdate: function() { el.textContent = Math.round(obj.val) + suffixes[i]; }
+    });
+  });
+
+  // Projetos
+  gsap.from('#projetos h2', { scrollTrigger: { trigger: '#projetos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('.project-card', { scrollTrigger: { trigger: '.projects-grid', start: 'top 82%' }, y: 50, opacity: 0, duration: 0.6, stagger: 0.18 });
+
+  // YouTube
+  gsap.from('#youtube h2', { scrollTrigger: { trigger: '#youtube', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('#yt-grid > *', { scrollTrigger: { trigger: '#yt-grid', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.15 });
+
+  // Artigos
+  gsap.from('#artigos h2', { scrollTrigger: { trigger: '#artigos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('#substack-grid > *', { scrollTrigger: { trigger: '#substack-grid', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.15 });
+
+  // Produtos
+  gsap.from('#produtos h2', { scrollTrigger: { trigger: '#produtos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('.produto-card', { scrollTrigger: { trigger: '#produtos', start: 'top 78%' }, y: 50, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'back.out(1.4)' });
+
+  // Contato
+  gsap.from('#contato h2', { scrollTrigger: { trigger: '#contato', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
+  gsap.from('.contact-link', { scrollTrigger: { trigger: '.contact-links', start: 'top 85%' }, x: 30, opacity: 0, duration: 0.45, stagger: 0.1 });
+
+  // Hover cards
+  document.querySelectorAll('.project-card, .produto-card').forEach(function(card) {
+    card.addEventListener('mouseenter', function() { gsap.to(card, { y: -8, duration: 0.25 }); });
+    card.addEventListener('mouseleave', function() { gsap.to(card, { y: 0, duration: 0.25 }); });
+  });
+  document.querySelectorAll('.contact-link').forEach(function(link) {
+    link.addEventListener('mouseenter', function() { gsap.to(link, { x: 6, duration: 0.2 }); });
+    link.addEventListener('mouseleave', function() { gsap.to(link, { x: 0, duration: 0.2 }); });
+  });
+
+  // Nav shrink
+  ScrollTrigger.create({
+    start: 'top -60',
+    onEnter: function() { gsap.to('nav', { padding: '0.6rem 3rem', duration: 0.3 }); },
+    onLeaveBack: function() { gsap.to('nav', { padding: '1rem 3rem', duration: 0.3 }); }
+  });
+});
+</script>
 </body>
 </html>
