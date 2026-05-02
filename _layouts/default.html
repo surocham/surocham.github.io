@@ -199,7 +199,7 @@
     <div class="hero-photo-wrap">
       <div class="hero-photo-bg"></div>
       <div class="hero-photo-inner">
-        <img src="../assets/portfolio.png" alt="Suami Medeiros">
+        <img src="../assets/portfolio.jpg" alt="Suami Medeiros">
       </div>
       <div class="hero-badge">
         <div class="badge-num">20%</div>
@@ -557,7 +557,7 @@ fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://suamir
   .catch(function() {});
 
 // RSS YouTube
-fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UCqZ7HjjJFRb8VfCVKZtN8Sg'))
+fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UCh_bUajivrvcYknSual1hUg'))
   .then(function(r) { return r.json(); })
   .then(function(data) {
     var parser = new DOMParser();
@@ -568,7 +568,9 @@ fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.yo
     grid.innerHTML = '';
     entries.forEach(function(entry) {
       var title = entry.querySelector('title') ? entry.querySelector('title').textContent : '';
-      var videoId = entry.querySelector('videoId') ? entry.querySelector('videoId').textContent : '';
+      var linkEl = entry.querySelector('link');
+      var videoUrl = linkEl ? (linkEl.getAttribute('href') || linkEl.textContent) : '';
+      var videoId = videoUrl.split('v=')[1] || '';
       if (!videoId) {
         var idEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015', 'videoId')[0];
         if (idEl) videoId = idEl.textContent;
