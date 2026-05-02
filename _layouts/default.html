@@ -526,35 +526,56 @@ if (navT) {
   });
 }
 
-// RSS Substack
-fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://suamirocham.substack.com/feed'))
-  .then(function(r) { return r.json(); })
-  .then(function(data) {
-    var parser = new DOMParser();
-    var xml = parser.parseFromString(data.contents, 'text/xml');
-    var items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
-    var grid = document.getElementById('substack-grid');
-    if (!items.length || !grid) return;
-    grid.innerHTML = '';
-    items.forEach(function(item) {
-      var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
-      var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
-      var desc = item.querySelector('description') ? item.querySelector('description').textContent.replace(/<[^>]*>/g, '').slice(0, 120) + '...' : '';
-      var date = item.querySelector('pubDate') ? new Date(item.querySelector('pubDate').textContent).toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) : '';
-      var a = document.createElement('a');
-      a.href = link;
-      a.target = '_blank';
-      a.style.cssText = 'background:#F5F4EF;border:1px solid rgba(194,24,91,0.1);border-radius:16px;padding:1.8rem;text-decoration:none;display:block;transition:transform 0.2s;';
-      a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
-      a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
-      a.innerHTML = '<div style="font-size:0.68rem;color:#A0536A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">' + date + '</div>'
-        + '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;color:#2C1018;margin-bottom:0.8rem;line-height:1.4;">' + title + '</h3>'
-        + '<p style="font-size:0.85rem;color:#6D2B40;line-height:1.6;font-weight:300;margin-bottom:1rem;">' + desc + '</p>'
-        + '<span style="font-size:0.8rem;font-weight:500;color:#C2185B;">Ler artigo \u2192</span>';
-      grid.appendChild(a);
-    });
-  })
-  .catch(function() {});
+// RSS Substack com múltiplos proxies
+function renderSubstack(xmlText) {
+  var parser = new DOMParser();
+  var xml = parser.parseFromString(xmlText, 'text/xml');
+  var items = Array.from(xml.querySelectorAll('item')).slice(0, 4);
+  var grid = document.getElementById('substack-grid');
+  if (!items.length || !grid) return false;
+  grid.innerHTML = '';
+  items.forEach(function(item) {
+    var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
+    var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
+    var desc = item.querySelector('description') ? item.querySelector('description').textContent.replace(/<[^>]*>/g, '').slice(0, 140) + '...' : '';
+    var date = item.querySelector('pubDate') ? new Date(item.querySelector('pubDate').textContent).toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) : '';
+    var a = document.createElement('a');
+    a.href = link;
+    a.target = '_blank';
+    a.style.cssText = 'background:#F5F4EF;border:1px solid rgba(194,24,91,0.1);border-radius:16px;padding:1.8rem;text-decoration:none;display:block;transition:transform 0.2s;';
+    a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
+    a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
+    a.innerHTML = '<div style="font-size:0.68rem;color:#A0536A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">' + date + '</div>'
+      + '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;color:#2C1018;margin-bottom:0.8rem;line-height:1.4;">' + title + '</h3>'
+      + '<p style="font-size:0.85rem;color:#6D2B40;line-height:1.6;font-weight:300;margin-bottom:1rem;">' + desc + '</p>'
+      + '<span style="font-size:0.8rem;font-weight:500;color:#C2185B;">Ler artigo \u2192</span>';
+    grid.appendChild(a);
+  });
+  return true;
+}
+
+var FEED_URL = 'https://suamirocham.substack.com/feed';
+var proxies = [
+  { url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(FEED_URL), json: true },
+  { url: 'https://corsproxy.io/?' + FEED_URL, json: false },
+  { url: 'https://api.codetabs.com/v1/proxy?quest=' + FEED_URL, json: false }
+];
+
+function tryProxy(i) {
+  if (i >= proxies.length) return;
+  var p = proxies[i];
+  fetch(p.url)
+    .then(function(r) { return r.text(); })
+    .then(function(text) {
+      var content = text;
+      if (p.json) {
+        try { content = JSON.parse(text).contents; } catch(e) {}
+      }
+      if (!renderSubstack(content)) tryProxy(i + 1);
+    })
+    .catch(function() { tryProxy(i + 1); });
+}
+tryProxy(0);
 
 // RSS YouTube
 fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.youtube.com/feeds/videos.xml?channel_id=UCh_bUajivrvcYknSual1hUg'))
