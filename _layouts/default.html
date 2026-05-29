@@ -3,530 +3,437 @@
 <head>
   {% if site.google_analytics %}
   <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
-  
   {% endif %}
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   {% seo %}
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <title>Suami Medeiros — Analista de Dados</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Suami Medeiros — Engenheira de Dados</title>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: #F5F4EF; color: #2C1018; overflow-x: hidden; margin: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-    /* NAV */
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1rem 3rem; background: rgba(245,244,239,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #C2185B; text-decoration: none; }
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-    .nav-links a { font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase; color: #6D2B40; text-decoration: none; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: #E91E8C; }
-    .nav-cv { color: #E91E8C !important; }
-    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; flex-direction: column; gap: 5px; }
-    .nav-toggle span { display: block; width: 22px; height: 2px; background: #C2185B; border-radius: 2px; transition: all 0.3s; }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+:root {
+  --rose: #d4607a;
+  --rose-light: #f7e8ed;
+  --rose-mid: #e8849a;
+  --rose-dark: #b03358;
+  --ink: #1d1d1f;
+  --ink-2: #3d3d3f;
+  --ink-3: #6e6e73;
+  --bg: #ffffff;
+  --bg-2: #f5f5f7;
+  --border: rgba(0,0,0,0.08);
+  --radius: 18px;
+}
 
-    /* BUTTONS */
-    .btn-primary { padding: 0.8rem 2rem; border-radius: 50px; background: #C2185B; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; display: inline-block; }
-    .btn-primary:hover { background: #8B1A4A; transform: translateY(-1px); }
-    .btn-outline { padding: 0.8rem 2rem; border-radius: 50px; background: transparent; color: #C2185B; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.05em; text-decoration: none; border: 1.5px solid #C2185B; cursor: pointer; transition: all 0.2s; display: inline-block; }
-    .btn-outline:hover { background: #FCE4EC; transform: translateY(-1px); }
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; margin: 0; }
 
-    /* TYPOGRAPHY */
-    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.6rem, 5vw, 4.5rem); line-height: 1.05; font-weight: 700; color: #2C1018; }
-    h1 em { font-style: italic; color: #C2185B; }
-    h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: #2C1018; line-height: 1.1; }
-    h2 em { font-style: italic; color: #C2185B; }
-    h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #2C1018; }
-    .section-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: #E91E8C; font-weight: 500; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.6rem; }
-    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: #E91E8C; }
-    .deco-line { width: 60px; height: 2px; background: linear-gradient(90deg, #E91E8C, transparent); margin-top: 1.5rem; margin-bottom: 2.5rem; }
-    .chip { font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 6px; background: rgba(194,24,91,0.08); color: #8B1A4A; display: inline-block; }
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 52px; background: rgba(255,255,255,0.82); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-size: 0.9rem; font-weight: 600; color: var(--ink); text-decoration: none; letter-spacing: -0.01em; }
+.nav-links { display: flex; gap: 1.8rem; align-items: center; }
+.nav-links a { font-size: 0.78rem; color: var(--ink-3); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cv { color: var(--rose) !important; border: 1px solid var(--rose); border-radius: 20px; padding: 0.28rem 0.85rem; transition: all 0.2s; }
+.nav-cv:hover { background: var(--rose); color: white !important; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
+.nav-toggle span { display: block; width: 20px; height: 1.5px; background: var(--ink); border-radius: 2px; transition: all 0.3s; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-    /* HERO */
-    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
-    .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 8rem 3rem 4rem 5rem; position: relative; z-index: 2; }
-    .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: #E91E8C; font-weight: 500; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.75rem; }
-    .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: #E91E8C; }
-    .hero-tagline { font-size: 1.05rem; color: #6D2B40; line-height: 1.7; max-width: 420px; margin: 1.5rem 0 2.5rem; font-weight: 300; }
-    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
-    .hero-right { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; background: #F5F4EF; }
-    .hero-blob { position: absolute; width: 72%; height: 72%; border-radius: 50%; background: radial-gradient(ellipse at center, #EDE0E5 0%, #E4D0D8 50%, transparent 72%); top: 14%; left: 14%; }
-    .hero-photo-wrap { position: relative; z-index: 2; width: 300px; height: 380px; }
-    .hero-photo-bg { position: absolute; inset: 20px 0 0 20px; border-radius: 60% 40% 50% 50% / 50% 40% 60% 50%; background: #C2185B; opacity: 0.12; }
-    .hero-photo-inner { position: absolute; inset: 0; border-radius: 55% 45% 48% 52% / 48% 42% 58% 52%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #EDD8DF; }
-    .hero-photo-inner img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
-    .hero-badge { position: absolute; bottom: 30px; right: -8px; background: white; border: 1.5px solid rgba(194,24,91,0.15); border-radius: 16px; padding: 0.8rem 1.2rem; z-index: 3; }
-    .badge-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: #C2185B; line-height: 1; }
-    .badge-label { font-size: 0.7rem; color: #A0536A; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
-    .hero-badge2 { position: absolute; top: 60px; left: -18px; background: #C2185B; border-radius: 12px; padding: 0.7rem 1rem; z-index: 3; }
-    .badge2-text { font-size: 0.72rem; color: white; font-weight: 500; letter-spacing: 0.05em; }
+/* HERO */
+.hero { min-height: 100svh; display: grid; grid-template-columns: 1fr 420px; align-items: center; gap: 4rem; padding: 7rem 6rem 5rem; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; right: -200px; top: 50%; transform: translateY(-50%); width: 700px; height: 700px; border-radius: 50%; background: radial-gradient(circle, rgba(212,96,122,0.07) 0%, transparent 70%); pointer-events: none; }
+.hero-text { position: relative; z-index: 2; }
+.hero-eyebrow { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 1.4rem; opacity: 0; animation: fadeUp 0.6s 0.2s ease forwards; }
+.hero h1 { font-size: clamp(2.6rem, 5vw, 5rem); font-weight: 600; line-height: 1.06; letter-spacing: -0.03em; color: var(--ink); max-width: 640px; opacity: 0; animation: fadeUp 0.7s 0.35s ease forwards; }
+.hero h1 span { color: var(--rose); }
+.hero-sub { font-size: 1rem; color: var(--ink-3); font-weight: 300; line-height: 1.75; max-width: 460px; margin-top: 1.4rem; opacity: 0; animation: fadeUp 0.6s 0.5s ease forwards; }
+.hero-actions { display: flex; gap: 0.75rem; margin-top: 2.2rem; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.6s 0.65s ease forwards; }
+.btn { font-size: 0.83rem; font-weight: 500; text-decoration: none; padding: 0.72rem 1.6rem; border-radius: 980px; transition: all 0.2s; display: inline-block; }
+.btn-fill { background: var(--rose); color: white; }
+.btn-fill:hover { background: var(--rose-dark); }
+.btn-ghost { color: var(--ink-3); border: 1px solid var(--border); }
+.btn-ghost:hover { color: var(--ink); border-color: rgba(0,0,0,0.22); }
+.hero-photo-wrap { position: relative; z-index: 2; opacity: 0; animation: fadeIn 0.9s 0.5s ease forwards; }
+.hero-photo-wrap img { width: 100%; border-radius: 24px; box-shadow: 0 24px 60px rgba(212,96,122,0.15); display: block; }
+.hero-photo-badge { position: absolute; bottom: -14px; left: -14px; background: white; border: 1px solid var(--border); border-radius: 14px; padding: 0.8rem 1.2rem; box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.badge-num { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.04em; color: var(--rose); line-height: 1; }
+.badge-label { font-size: 0.68rem; color: var(--ink-3); margin-top: 0.2rem; }
 
-    /* SKILLS STRIP */
-    .skills-strip { background: #C2185B; padding: 1.2rem 0; overflow: hidden; }
-    .skills-scroll { display: flex; gap: 3rem; align-items: center; animation: scroll-left 22s linear infinite; white-space: nowrap; }
-    @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-    .skill-pill { font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.9); font-weight: 500; display: flex; align-items: center; gap: 0.6rem; }
-    .skill-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+/* TICKER */
+.ticker-wrap { overflow: hidden; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.9rem 0; }
+.ticker-track { display: flex; gap: 3rem; width: max-content; animation: ticker 24s linear infinite; }
+.ticker-item { font-size: 0.78rem; font-weight: 500; color: var(--ink-3); white-space: nowrap; }
+.ticker-item span { color: var(--rose); margin-right: 3rem; }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* SOBRE */
-    #sobre { padding: 6rem 5rem; background: #F5F4EF; }
-    .about { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .about-text p { font-size: 1rem; color: #6D2B40; line-height: 1.8; margin-bottom: 1rem; font-weight: 300; }
-    .about-text strong { color: #2C1018; font-weight: 500; }
-    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .stat-card { padding: 1.5rem; background: white; border: 1px solid rgba(194,24,91,0.1); border-radius: 20px; position: relative; overflow: hidden; }
-    .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #E91E8C, #8B1A4A); }
-    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 700; color: #C2185B; line-height: 1; margin-bottom: 0.3rem; }
-    .stat-desc { font-size: 0.82rem; color: #A0536A; line-height: 1.5; }
-    .tools-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
-    .tool-tag { padding: 0.5rem 1.2rem; border-radius: 50px; border: 1.5px solid rgba(194,24,91,0.2); font-size: 0.82rem; color: #6D2B40; font-weight: 500; background: white; transition: all 0.2s; }
-    .tool-tag:hover { background: #FCE4EC; border-color: #C2185B; color: #8B1A4A; }
-    .tool-tag.featured { background: #C2185B; color: white; border-color: #C2185B; }
+/* SECTIONS */
+.section { padding: 7rem 6rem; }
+.section.alt { background: var(--bg-2); }
+.section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.6rem; }
+.section-title { font-size: clamp(1.7rem, 2.8vw, 2.4rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 0.7rem; }
+.section-title em { font-style: italic; color: var(--rose); }
+.section-sub { font-size: 0.95rem; color: var(--ink-3); font-weight: 300; max-width: 500px; }
 
-    /* PROJETOS */
-    #projetos { padding: 6rem 5rem; background: white; }
-    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
-    .project-card { border: 1px solid rgba(194,24,91,0.1); border-radius: 24px; overflow: hidden; background: #F5F4EF; text-decoration: none; display: block; transition: transform 0.25s, box-shadow 0.25s; }
-    .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(194,24,91,0.12); }
-    .project-header { padding: 2rem; background: linear-gradient(135deg, #EDE0E5, white); display: flex; align-items: center; justify-content: space-between; }
-    .project-img { width: 100%; height: 160px; object-fit: cover; display: block; }
-    .project-icon { width: 52px; height: 52px; border-radius: 14px; background: #C2185B; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
-    .project-tag { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C2185B; font-weight: 500; background: white; border: 1px solid rgba(194,24,91,0.2); padding: 0.3rem 0.8rem; border-radius: 50px; }
-    .project-body { padding: 1.5rem 2rem 2rem; }
-    .project-body h3 { margin-bottom: 0.75rem; }
-    .project-body p { font-size: 0.88rem; color: #6D2B40; line-height: 1.7; margin-bottom: 1.2rem; font-weight: 300; }
-    .project-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-    .project-cta { font-size: 0.82rem; font-weight: 500; color: #C2185B; display: inline-flex; align-items: center; gap: 0.4rem; text-decoration: none; padding: 0.6rem 1.4rem; border-radius: 50px; border: 1.5px solid #C2185B; transition: all 0.2s; }
-    .project-cta:hover { background: #C2185B; color: white; }
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; margin-top: 3.5rem; }
+.about p { font-size: 0.93rem; color: var(--ink-3); line-height: 1.85; font-weight: 300; margin-bottom: 0.9rem; }
+.about p strong { color: var(--ink); font-weight: 500; }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.stat-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem; position: relative; overflow: hidden; }
+.stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--rose), var(--rose-mid)); }
+.stat-num { font-size: 1.9rem; font-weight: 600; letter-spacing: -0.04em; color: var(--ink); line-height: 1; }
+.stat-label { font-size: 0.74rem; color: var(--ink-3); margin-top: 0.35rem; line-height: 1.4; }
 
-    /* CONTATO */
-    #contato { padding: 6rem 5rem; background: #8B1A4A; }
-    #contato .section-label { color: rgba(255,240,245,0.7); }
-    #contato .section-label::before { background: rgba(255,240,245,0.5); }
-    #contato h2 { color: white; }
-    #contato h2 em { color: #F8BBD0; }
-    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
-    .contact-copy { font-size: 1rem; color: rgba(255,240,245,0.75); line-height: 1.8; font-weight: 300; margin-top: 1rem; }
-    .contact-links { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-    .contact-link { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.5rem; border-radius: 16px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); text-decoration: none; color: white; transition: background 0.2s; font-size: 0.9rem; }
-    .contact-link:hover { background: rgba(255,255,255,0.15); }
-    .link-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; color: white; font-weight: 500; }
-    .link-meta { display: flex; flex-direction: column; }
-    .link-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,240,245,0.5); }
-    .link-value { font-size: 0.9rem; color: rgba(255,240,245,0.9); }
+/* STACK */
+.stack-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+.stack-group { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; }
+.stack-group-title { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--rose); margin-bottom: 1rem; }
+.stack-item { font-size: 0.86rem; color: var(--ink-2); padding: 0.45rem 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 0.55rem; }
+.stack-item:last-child { border-bottom: none; }
+.stack-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); flex-shrink: 0; }
 
-    /* FOOTER */
-    footer { background: #8B1A4A; padding: 1.5rem 5rem; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
-    footer p { font-size: 0.8rem; color: rgba(255,240,245,0.4); margin: 0; }
+/* PROJECTS */
+.projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 3rem; }
+.project-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; text-decoration: none; color: inherit; transition: transform 0.25s, box-shadow 0.25s; display: flex; flex-direction: column; gap: 0.9rem; position: relative; overflow: hidden; }
+.project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--rose-mid)); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; }
+.project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+.project-card:hover::before { transform: scaleX(1); }
+.project-tag { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); background: var(--rose-light); border-radius: 6px; padding: 0.22rem 0.55rem; display: inline-block; width: fit-content; }
+.project-title { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.3; }
+.project-desc { font-size: 0.86rem; color: var(--ink-3); line-height: 1.7; font-weight: 300; flex: 1; }
+.project-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.pchip { font-size: 0.68rem; font-weight: 500; color: var(--ink-3); border: 1px solid var(--border); border-radius: 6px; padding: 0.18rem 0.5rem; }
+.project-arrow { position: absolute; bottom: 1.4rem; right: 1.4rem; font-size: 1rem; color: var(--rose); opacity: 0; transition: opacity 0.2s, transform 0.2s; }
+.project-card:hover .project-arrow { opacity: 1; transform: translate(2px, -2px); }
 
-    /* TABLET */
-    @media (max-width: 1024px) {
-      nav { padding: 1rem 2rem; }
-      .hero-left { padding: 7rem 2.5rem 3rem 3rem; }
-      #sobre, #projetos, #contato { padding: 5rem 3rem; }
-      .about { gap: 3rem; }
-      .contact-layout { gap: 3rem; }
-      footer { padding: 1.5rem 2rem; }
-    }
-    /* MOBILE */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-toggle { display: flex; }
-      .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 100%; left: 0; right: 0; background: rgba(245,244,239,0.98); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(194,24,91,0.1); padding: 0.5rem 0 1rem; }
-      .nav-links.open { display: flex; }
-      .nav-links a { padding: 0.75rem 1.5rem; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-left { padding: 6rem 1.5rem 3rem; align-items: center; text-align: center; }
-      .hero-eyebrow { justify-content: center; }
-      .hero-tagline { text-align: center; max-width: 100%; }
-      .hero-ctas { justify-content: center; }
-      .hero-right { display: none; }
-      #sobre, #projetos, #contato { padding: 4rem 1.5rem; }
-      .about { grid-template-columns: 1fr; gap: 2.5rem; }
-      .projects-grid { grid-template-columns: 1fr; }
-      .contact-layout { grid-template-columns: 1fr; gap: 2rem; }
-      footer { flex-direction: column; gap: 0.4rem; padding: 1.5rem; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .hero-left { padding: 5.5rem 1.2rem 2.5rem; }
-      #sobre, #projetos, #contato { padding: 3rem 1.2rem; }
-      .about-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
-      .stat-num { font-size: 2rem; }
-      .hero-ctas { flex-direction: column; width: 100%; }
-      .btn-primary, .btn-outline { width: 100%; text-align: center; }
-      .project-header { padding: 1.2rem; }
-      .project-body { padding: 1.2rem; }
-      footer { padding: 1.2rem; }
-    }
+/* YOUTUBE */
+.youtube-box { margin-top: 3rem; background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.youtube-left { display: flex; align-items: center; gap: 1.5rem; }
+.yt-icon { width: 52px; height: 52px; background: var(--rose); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.yt-icon svg { width: 24px; height: 24px; fill: white; }
+.yt-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 0.3rem; }
+.yt-sub { font-size: 0.84rem; color: var(--ink-3); font-weight: 300; max-width: 420px; line-height: 1.6; }
+#yt-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.2rem; margin-top: 2rem; }
+
+/* ARTICLES */
+.articles-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 3rem; }
+.article-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.6rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0.6rem; transition: transform 0.2s, box-shadow 0.2s; }
+.article-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(0,0,0,0.07); }
+.article-source { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--rose); }
+.article-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; }
+.article-desc { font-size: 0.8rem; color: var(--ink-3); line-height: 1.6; font-weight: 300; flex: 1; }
+.article-link { font-size: 0.75rem; color: var(--rose); font-weight: 500; margin-top: auto; }
+.articles-cta { margin-top: 1.5rem; }
+#substack-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 1.2rem; margin-top: 3rem; }
+
+/* PRODUCTS */
+.products-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 3rem; }
+.product-card { background: white; border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+.product-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+.product-name { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+.product-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; background: var(--rose-light); color: var(--rose); border-radius: 6px; padding: 0.22rem 0.55rem; white-space: nowrap; }
+.product-tagline { font-size: 0.78rem; font-weight: 500; color: var(--ink-3); }
+.product-desc { font-size: 0.86rem; color: var(--ink-3); line-height: 1.7; font-weight: 300; flex: 1; }
+.product-chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.product-link { font-size: 0.78rem; color: var(--rose); font-weight: 500; text-decoration: none; margin-top: auto; padding-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.3rem; }
+.product-link:hover { text-decoration: underline; }
+
+/* CONTACT */
+.contact-section { padding: 8rem 6rem; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.contact-section h2 { font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 600; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.9rem; max-width: 560px; }
+.contact-section h2 em { font-style: italic; color: var(--rose); }
+.contact-section > p { font-size: 0.95rem; color: var(--ink-3); font-weight: 300; margin-bottom: 2.5rem; max-width: 420px; }
+.contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+.contact-link { font-size: 0.8rem; font-weight: 500; color: var(--ink-3); text-decoration: none; border: 1px solid var(--border); border-radius: 980px; padding: 0.62rem 1.3rem; transition: all 0.2s; }
+.contact-link:hover { color: var(--ink); border-color: rgba(0,0,0,0.22); }
+.contact-link.primary { background: var(--rose); color: white; border-color: var(--rose); }
+.contact-link.primary:hover { background: var(--rose-dark); border-color: var(--rose-dark); }
+
+/* FOOTER */
+footer { padding: 1.5rem 6rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+footer p { font-size: 0.74rem; color: var(--ink-3); }
+footer a { font-size: 0.74rem; color: var(--rose); text-decoration: none; }
+
+/* ANIMATIONS */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; padding: 6rem 3rem 4rem; }
+  .hero-photo-wrap { display: none; }
+  .section { padding: 5rem 3rem; }
+  .contact-section { padding: 5rem 3rem; }
+  footer { padding: 1.5rem 3rem; }
+}
+@media (max-width: 768px) {
+  nav { padding: 0 1.5rem; }
+  .nav-toggle { display: flex; }
+  .nav-links { display: none; flex-direction: column; gap: 0; position: absolute; top: 52px; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); padding: 0.5rem 0 1rem; }
+  .nav-links.open { display: flex; }
+  .nav-links a { padding: 0.75rem 1.5rem; border-radius: 0; border: none; }
+  .nav-cv { margin: 0.5rem 1.5rem; width: fit-content; }
+  .hero { padding: 5.5rem 1.5rem 3rem; }
+  .section { padding: 4rem 1.5rem; }
+  .about-grid, .stack-grid, .projects-grid, .articles-grid, .products-grid { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .contact-section { padding: 5rem 1.5rem; }
+  footer { padding: 1.5rem; flex-direction: column; gap: 0.4rem; text-align: center; }
+  .youtube-box { flex-direction: column; align-items: flex-start; }
+}
   </style>
 </head>
 <body>
 
 <nav>
-  <a href="#inicio" class="nav-logo">Suami Medeiros</a>
-  <button class="nav-toggle" id="navToggle" aria-label="Menu">
-    <span></span><span></span><span></span>
-  </button>
+  <a href="/" class="nav-logo">Suami Medeiros</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links" id="navLinks">
     <a href="#sobre">Sobre</a>
+    <a href="#stack">Stack</a>
     <a href="#projetos">Projetos</a>
     <a href="#youtube">YouTube</a>
     <a href="#artigos">Artigos</a>
     <a href="#produtos">Produtos</a>
     <a href="#contato">Contato</a>
-    <a href="/assets/CV_Analista_Suami_Medeiros_2026.pdf" download class="nav-cv">Baixar CV</a>
+    <a href="/assets/CV_Engenheira_Suami_Medeiros_2026.pdf" download class="nav-cv">Baixar CV</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
-  <div class="hero-left">
-    <div class="hero-eyebrow">Analista de Dados</div>
-    <h1>Suami<br><em>Medeiros</em></h1>
-    <p class="hero-tagline">Transformo dados brutos em decisões estratégicas — com precisão técnica, visão analítica e uma pitada de atitude.</p>
-    <div class="hero-ctas">
-      <a href="#projetos" class="btn-primary">Ver projetos</a>
-      <a href="#contato" class="btn-outline">Entre em contato</a>
+  <div class="hero-text">
+    <p class="hero-eyebrow">Engenheira de Dados</p>
+    <h1>Pipelines no trabalho,<br><span>representação</span><br>na vida.</h1>
+    <p class="hero-sub">Construindo soluções de dados escaláveis com Python, SQL e cloud em AWS, Azure e GCP. Voluntária na WoMakersCode.</p>
+    <div class="hero-actions">
+      <a href="#projetos" class="btn btn-fill">Ver projetos</a>
+      <a href="#contato" class="btn btn-ghost">Entrar em contato</a>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-blob"></div>
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-bg"></div>
-      <div class="hero-photo-inner">
-        <img src="../assets/portfolio.png" alt="Suami Medeiros">
-      </div>
-      <div class="hero-badge">
-        <div class="badge-num">20%</div>
-        <div class="badge-label">Redução de erros</div>
-      </div>
-      <div class="hero-badge2">
-        <div class="badge2-text">SQL · Python · Power BI</div>
-      </div>
+  <div class="hero-photo-wrap">
+    <img src="/assets/portfolio.png" alt="Suami Medeiros" />
+    <div class="hero-photo-badge">
+      <div class="badge-num">100%</div>
+      <div class="badge-label">Integridade nos pipelines</div>
     </div>
   </div>
 </section>
 
-<!-- SKILLS STRIP -->
-<div class="skills-strip">
-  <div class="skills-scroll">
-    <span class="skill-pill"><span class="skill-dot"></span>SQL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Python</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Power BI</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Apache Airflow</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Docker</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Selenium</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Pandas</span>
-    <span class="skill-pill"><span class="skill-dot"></span>PostgreSQL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>ETL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Web Scraping</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Excel</span>
-    <span class="skill-pill"><span class="skill-dot"></span>SQL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Python</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Power BI</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Apache Airflow</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Docker</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Selenium</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Pandas</span>
-    <span class="skill-pill"><span class="skill-dot"></span>PostgreSQL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>ETL</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Web Scraping</span>
-    <span class="skill-pill"><span class="skill-dot"></span>Excel</span>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item">Python <span>·</span></span>
+    <span class="ticker-item">SQL <span>·</span></span>
+    <span class="ticker-item">Apache Airflow <span>·</span></span>
+    <span class="ticker-item">Docker <span>·</span></span>
+    <span class="ticker-item">AWS <span>·</span></span>
+    <span class="ticker-item">Azure <span>·</span></span>
+    <span class="ticker-item">GCP <span>·</span></span>
+    <span class="ticker-item">Databricks <span>·</span></span>
+    <span class="ticker-item">ETL <span>·</span></span>
+    <span class="ticker-item">Data Lake <span>·</span></span>
+    <span class="ticker-item">Selenium <span>·</span></span>
+    <span class="ticker-item">PostgreSQL <span>·</span></span>
+    <span class="ticker-item">Pandas <span>·</span></span>
+    <span class="ticker-item">Governança de Dados <span>·</span></span>
+    <span class="ticker-item">Python <span>·</span></span>
+    <span class="ticker-item">SQL <span>·</span></span>
+    <span class="ticker-item">Apache Airflow <span>·</span></span>
+    <span class="ticker-item">Docker <span>·</span></span>
+    <span class="ticker-item">AWS <span>·</span></span>
+    <span class="ticker-item">Azure <span>·</span></span>
+    <span class="ticker-item">GCP <span>·</span></span>
+    <span class="ticker-item">Databricks <span>·</span></span>
+    <span class="ticker-item">ETL <span>·</span></span>
+    <span class="ticker-item">Data Lake <span>·</span></span>
+    <span class="ticker-item">Selenium <span>·</span></span>
+    <span class="ticker-item">PostgreSQL <span>·</span></span>
+    <span class="ticker-item">Pandas <span>·</span></span>
+    <span class="ticker-item">Governança de Dados <span>·</span></span>
   </div>
 </div>
 
 <!-- SOBRE -->
-<section id="sobre">
-  <div class="about">
-    <div class="about-text">
-      <div class="section-label">Sobre mim</div>
-      <h2>Dados com <em>propósito</em></h2>
-      <div class="deco-line"></div>
-      <p>Profissional em transição para a área de dados, com experiência prática em análise, organização e interpretação de dados voltados à tomada de decisão.</p>
-      <p>Ao longo da minha trajetória como <strong>desenvolvedora mobile</strong>, desenvolvi uma visão analítica apurada — trabalhando diretamente com dados de uso de aplicações, métricas de performance e ciclos de entrega orientados a resultado.</p>
-      <p>Tenho facilidade para <strong>comunicar insights</strong> a públicos técnicos e não técnicos, habilidade desenvolvida em projetos com clientes e times multidisciplinares.</p>
-      <div class="tools-grid">
-        <span class="tool-tag featured">SQL</span>
-        <span class="tool-tag featured">Python</span>
-        <span class="tool-tag featured">Power BI</span>
-        <span class="tool-tag">Excel</span>
-        <span class="tool-tag">Airflow</span>
-        <span class="tool-tag">Docker</span>
-        <span class="tool-tag">Selenium</span>
-        <span class="tool-tag">Pandas</span>
-        <span class="tool-tag">PostgreSQL</span>
-      </div>
+<section class="section" id="sobre">
+  <p class="section-label reveal">Sobre mim</p>
+  <h2 class="section-title reveal">Dado confiável é <em>infraestrutura</em> de negócio.</h2>
+  <div class="about-grid">
+    <div class="about reveal">
+      <p>Sou Engenheira de Dados com foco em ETL, Data Lake, governança e qualidade de dados. Atuo na <strong>Miner BI</strong> com pipelines automatizados e ambientes multi-cloud, construindo soluções que não quebram quando a demanda escala.</p>
+      <p>Antes disso, passei pelo desenvolvimento mobile com <strong>Flutter, Firebase e APIs REST</strong>, o que me deu uma visão orientada a produto que carrego pra cada pipeline que escrevo.</p>
+      <p>Voluntária na <strong>WoMakersCode</strong>. Certificada em AWS Cloud Practitioner e Databricks. Pós-graduanda em Data Analytics pela FIAP.</p>
     </div>
-    <div class="about-stats">
-      <div class="stat-card"><div class="stat-num">20%</div><div class="stat-desc">Redução em erros recorrentes em aplicações mobile</div></div>
-      <div class="stat-card"><div class="stat-num">10+</div><div class="stat-desc">Funcionalidades entregues dentro do prazo e escopo</div></div>
-      <div class="stat-card"><div class="stat-num">91</div><div class="stat-desc">Registros migrados com 100% de integridade no pipeline ETL</div></div>
-      <div class="stat-card"><div class="stat-num">12</div><div class="stat-desc">Colunas estruturadas no dataset de web scraping público</div></div>
+    <div class="stats-grid reveal">
+      <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Integridade nos pipelines entregues</div></div>
+      <div class="stat-card"><div class="stat-num">3</div><div class="stat-label">Clouds: AWS, Azure e GCP</div></div>
+      <div class="stat-card"><div class="stat-num">91</div><div class="stat-label">Registros migrados com integridade total</div></div>
+      <div class="stat-card"><div class="stat-num">12</div><div class="stat-label">Colunas estruturadas no dataset de scraping</div></div>
     </div>
   </div>
 </section>
 
-<!-- PROJETOS -->
-<section id="projetos">
-  <div class="section-label">Portfólio</div>
-  <h2>Projetos <em>em destaque</em></h2>
-  <div class="deco-line"></div>
+<!-- STACK -->
+<section class="section alt" id="stack">
+  <p class="section-label reveal">Stack</p>
+  <h2 class="section-title reveal">Ferramentas que uso <em>no dia a dia.</em></h2>
+  <p class="section-sub reveal">Do pipeline à nuvem, passando por dados e automação.</p>
+  <div class="stack-grid">
+    <div class="stack-group reveal">
+      <div class="stack-group-title">Linguagens</div>
+      <div class="stack-item"><div class="stack-dot"></div>Python</div>
+      <div class="stack-item"><div class="stack-dot"></div>SQL</div>
+    </div>
+    <div class="stack-group reveal">
+      <div class="stack-group-title">Engenharia & Orquestração</div>
+      <div class="stack-item"><div class="stack-dot"></div>Apache Airflow</div>
+      <div class="stack-item"><div class="stack-dot"></div>Docker</div>
+      <div class="stack-item"><div class="stack-dot"></div>dbt</div>
+      <div class="stack-item"><div class="stack-dot"></div>Selenium</div>
+      <div class="stack-item"><div class="stack-dot"></div>PostgreSQL</div>
+    </div>
+    <div class="stack-group reveal">
+      <div class="stack-group-title">Cloud</div>
+      <div class="stack-item"><div class="stack-dot"></div>AWS</div>
+      <div class="stack-item"><div class="stack-dot"></div>Azure / Azure Data Factory</div>
+      <div class="stack-item"><div class="stack-dot"></div>GCP / BigQuery</div>
+      <div class="stack-item"><div class="stack-dot"></div>Databricks</div>
+      <div class="stack-item"><div class="stack-dot"></div>Microsoft Fabric</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projetos">
+  <p class="section-label reveal">Projetos</p>
+  <h2 class="section-title reveal">Dados <em>em prática.</em></h2>
+  <p class="section-sub reveal">Projetos reais, documentados do problema ao resultado.</p>
   <div class="projects-grid">
+    <a href="/projeto-etl.html" class="project-card reveal">
+      <span class="project-tag">Engenharia de Dados</span>
+      <div class="project-title">Pipeline ETL com Airflow e Docker</div>
+      <p class="project-desc">Pipeline automatizado que extrai, valida e carrega dados entre dois bancos PostgreSQL. Agendado diariamente, 100% reproduzível, com validação de integridade em 91 registros migrados.</p>
+      <div class="project-chips">
+        <span class="pchip">Airflow</span><span class="pchip">Docker</span><span class="pchip">PostgreSQL</span><span class="pchip">Python</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </a>
+    <a href="/projeto-scraping.html" class="project-card reveal">
+      <span class="project-tag">Web Scraping</span>
+      <div class="project-title">Scraping da Folha de Pagamento SP com Selenium</div>
+      <p class="project-desc">Scraper em Python com Selenium para extração de dados públicos da Prefeitura de São Paulo. Dataset com 12 colunas, limpeza completa e entregue com Docker para reprodutibilidade.</p>
+      <div class="project-chips">
+        <span class="pchip">Selenium</span><span class="pchip">Python</span><span class="pchip">Pandas</span><span class="pchip">Docker</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </a>
+  </div>
+</section>
 
-    <div class="project-card">
-      <div class="project-header" style="padding: 3rem 2rem;">
-        <div class="project-icon">🛫</div>
-        <span class="project-tag">Engenharia de Dados</span>
+<!-- YOUTUBE -->
+<section class="section alt" id="youtube">
+  <p class="section-label reveal">Conteúdo</p>
+  <h2 class="section-title reveal">No <em>YouTube.</em></h2>
+  <p class="section-sub reveal">Jornada em dados, projetos reais, ferramentas e bastidores do dia a dia.</p>
+  <div id="yt-grid">
+    <div style="border-radius:var(--radius);overflow:hidden;background:white;border:1px solid var(--border);"><div style="width:100%;aspect-ratio:16/9;background:var(--bg-2);display:flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(212,96,122,0.1)"/><polygon points="19,16 35,24 19,32" fill="var(--rose)"/></svg></div><div style="padding:1rem 1.2rem 1.4rem;"><div style="height:12px;background:var(--bg-2);border-radius:4px;margin-bottom:8px;"></div><div style="height:10px;background:var(--bg-2);border-radius:4px;width:60%;"></div></div></div>
+    <div style="border-radius:var(--radius);overflow:hidden;background:white;border:1px solid var(--border);"><div style="width:100%;aspect-ratio:16/9;background:var(--bg-2);display:flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(212,96,122,0.1)"/><polygon points="19,16 35,24 19,32" fill="var(--rose)"/></svg></div><div style="padding:1rem 1.2rem 1.4rem;"><div style="height:12px;background:var(--bg-2);border-radius:4px;margin-bottom:8px;"></div><div style="height:10px;background:var(--bg-2);border-radius:4px;width:75%;"></div></div></div>
+    <div style="border-radius:var(--radius);overflow:hidden;background:white;border:1px solid var(--border);"><div style="width:100%;aspect-ratio:16/9;background:var(--bg-2);display:flex;align-items:center;justify-content:center;"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(212,96,122,0.1)"/><polygon points="19,16 35,24 19,32" fill="var(--rose)"/></svg></div><div style="padding:1rem 1.2rem 1.4rem;"><div style="height:12px;background:var(--bg-2);border-radius:4px;margin-bottom:8px;"></div><div style="height:10px;background:var(--bg-2);border-radius:4px;width:50%;"></div></div></div>
+  </div>
+  <div style="margin-top:1.5rem;">
+    <a href="https://www.youtube.com/@SuamiMedeiros-Data" target="_blank" class="btn btn-ghost">Ver canal no YouTube →</a>
+  </div>
+</section>
+
+<!-- ARTIGOS -->
+<section class="section" id="artigos">
+  <p class="section-label reveal">Escrita</p>
+  <h2 class="section-title reveal">Artigos <em>sem filtro.</em></h2>
+  <p class="section-sub reveal">Sobre dados, carreira e aprendizados reais da minha jornada.</p>
+  <div id="substack-grid">
+    <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;"><div style="width:60px;height:6px;background:rgba(212,96,122,0.15);border-radius:3px;margin-bottom:1rem;"></div><div style="height:14px;background:rgba(212,96,122,0.1);border-radius:4px;margin-bottom:8px;"></div><div style="height:14px;background:rgba(212,96,122,0.07);border-radius:4px;width:80%;margin-bottom:1.2rem;"></div><div style="height:10px;background:var(--bg-2);border-radius:3px;margin-bottom:6px;"></div><div style="height:10px;background:var(--bg-2);border-radius:3px;width:70%;"></div></div>
+    <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem;"><div style="width:60px;height:6px;background:rgba(212,96,122,0.15);border-radius:3px;margin-bottom:1rem;"></div><div style="height:14px;background:rgba(212,96,122,0.1);border-radius:4px;margin-bottom:8px;"></div><div style="height:14px;background:rgba(212,96,122,0.07);border-radius:4px;width:90%;margin-bottom:1.2rem;"></div><div style="height:10px;background:var(--bg-2);border-radius:3px;margin-bottom:6px;"></div><div style="height:10px;background:var(--bg-2);border-radius:3px;width:55%;"></div></div>
+  </div>
+  <div class="articles-cta reveal">
+    <a href="https://suamirocham.substack.com" target="_blank" class="btn btn-ghost">Ver todos os artigos →</a>
+  </div>
+</section>
+
+<!-- PRODUTOS -->
+<section class="section alt" id="produtos">
+  <p class="section-label reveal">Produtos</p>
+  <h2 class="section-title reveal">O que estou <em>construindo.</em></h2>
+  <p class="section-sub reveal">Além de dados, construo ferramentas que resolvem problemas reais com Lovable e Supabase.</p>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-header">
+        <div class="product-name">Junty</div>
+        <span class="product-badge">Scheduling</span>
       </div>
-      <div class="project-body">
-        <h3>Pipeline ETL com Airflow e Docker</h3>
-        <p>Pipeline automatizado que extrai dados de um PostgreSQL fonte, valida integridade e carrega no banco de destino — agendado diariamente, zero intervenção manual. 91 registros migrados com 100% de integridade.</p>
-        <div class="project-chips">
-          <span class="chip">Apache Airflow</span><span class="chip">Docker</span><span class="chip">PostgreSQL</span><span class="chip">Python</span><span class="chip">ETL</span>
-        </div>
-        <a href="/projeto-etl.html" class="project-cta">Ver projeto completo →</a>
+      <div class="product-tagline">Scheduling inteligente para reuniões</div>
+      <p class="product-desc">Encontra o melhor horário para reuniões considerando a disponibilidade de todos os participantes e envia os convites por e-mail automaticamente.</p>
+      <div class="product-chips">
+        <span class="pchip">Lovable</span><span class="pchip">Supabase</span><span class="pchip">Email API</span>
       </div>
+      <a href="https://usejunty.lovable.app" target="_blank" class="product-link">Acessar produto →</a>
     </div>
-
-    <div class="project-card">
-      <div class="project-header" style="padding: 3rem 2rem;">
-        <div class="project-icon">🤖</div>
-        <span class="project-tag">Web Scraping</span>
+    <div class="product-card reveal">
+      <div class="product-header">
+        <div class="product-name">Testyme</div>
+        <span class="product-badge">CareerTech</span>
       </div>
-      <div class="project-body">
-        <h3>Web Scraping com Selenium — Folha de Pagamento SP</h3>
-        <p>Scraper que extrai a folha de pagamento IPREM 2025 da Prefeitura de São Paulo de uma tabela dinâmica (SlickGrid/iframe). Dataset com 12 colunas, limpeza e padronização completas. Desenvolvido do zero em 3 dias.</p>
-        <div class="project-chips">
-          <span class="chip">Selenium</span><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">Docker</span><span class="chip">XPath</span>
-        </div>
-        <a href="/projeto-scraping.html" class="project-cta">Ver projeto completo →</a>
+      <div class="product-tagline">Prepare-se para qualquer entrevista</div>
+      <p class="product-desc">Testes de código, criação de portfólio guiado e simulações de entrevista com IA — tudo que você precisa para conquistar sua vaga em tech.</p>
+      <div class="product-chips">
+        <span class="pchip">Lovable</span><span class="pchip">Supabase</span><span class="pchip">IA</span>
       </div>
+      <a href="https://www.testyme.com.br" target="_blank" class="product-link">Acessar produto →</a>
     </div>
-
   </div>
 </section>
 
 <!-- CONTATO -->
-
-<!-- YOUTUBE -->
-<section id="youtube" style="padding: 6rem 5rem; background: #F5F4EF;">
-  <div class="section-label">Conteúdo</div>
-  <h2>No <em>YouTube</em></h2>
-  <div class="deco-line"></div>
-  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:2.5rem; line-height:1.8;">
-    Compartilho minha jornada em dados — projetos reais, ferramentas, carreira e bastidores do dia a dia de quem está em transição.
-  </p>
-  <div id="yt-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:1.5rem; margin-bottom:2rem;">
-    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
-      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
-      </div>
-      <div style="padding:1rem 1.2rem 1.4rem;">
-        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
-        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:60%;"></div>
-      </div>
-    </div>
-    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
-      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
-      </div>
-      <div style="padding:1rem 1.2rem 1.4rem;">
-        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
-        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:75%;"></div>
-      </div>
-    </div>
-    <div class="yt-skeleton" style="border-radius:16px; overflow:hidden; background:white; border:1px solid rgba(194,24,91,0.08);">
-      <div style="width:100%; aspect-ratio:16/9; background:linear-gradient(135deg,#EDE0E5,#F5EDF0); display:flex; align-items:center; justify-content:center;">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#C2185B" opacity="0.15"/><polygon points="19,16 35,24 19,32" fill="#C2185B"/></svg>
-      </div>
-      <div style="padding:1rem 1.2rem 1.4rem;">
-        <div style="height:12px; background:#F0E6EA; border-radius:4px; margin-bottom:8px;"></div>
-        <div style="height:10px; background:#F5EDF0; border-radius:4px; width:50%;"></div>
-      </div>
-    </div>
-  </div>
-  <a href="https://www.youtube.com/@SuamiMedeiros-Data" target="_blank" class="btn-outline" style="display:inline-flex; align-items:center; gap:0.6rem;">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M14.5 4.5s-.18-1.26-.72-1.81c-.69-.72-1.46-.73-1.81-.77C10.48 1.8 8 1.8 8 1.8s-2.48 0-3.97.12c-.35.04-1.12.05-1.81.77C1.68 3.24 1.5 4.5 1.5 4.5S1.3 5.98 1.3 7.46v1.39c0 1.48.2 2.96.2 2.96s.18 1.26.72 1.81c.69.72 1.6.7 2 .77 1.45.14 6.15.18 6.15.18s2.48 0 3.97-.13c.35-.04 1.12-.05 1.81-.77.54-.55.72-1.81.72-1.81s.2-1.48.2-2.96V7.46c0-1.48-.2-2.96-.2-2.96zM6.55 9.82V5.58l4.9 2.13-4.9 2.11z" fill="#C2185B"/></svg>
-    Ver canal no YouTube
-  </a>
-</section>
-
-<!-- ARTIGOS SUBSTACK -->
-<section id="artigos" style="padding: 6rem 5rem; background: white;">
-  <div class="section-label">Escrita</div>
-  <h2>Artigos no <em>Substack</em></h2>
-  <div class="deco-line"></div>
-  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:2.5rem; line-height:1.8;">
-    Escrevo sobre dados, carreira e aprendizados reais da minha jornada. Sem filtro, sem guru.
-  </p>
-  <div id="substack-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:1.5rem; margin-bottom:2rem;">
-    <!-- Articles loaded by JS via RSS -->
-    <div class="article-skeleton" style="background:#F5F4EF; border:1px solid rgba(194,24,91,0.08); border-radius:16px; padding:1.8rem;">
-      <div style="width:60px; height:6px; background:#EDE0E5; border-radius:3px; margin-bottom:1rem;"></div>
-      <div style="height:14px; background:#EDE0E5; border-radius:4px; margin-bottom:8px;"></div>
-      <div style="height:14px; background:#F0E6EA; border-radius:4px; width:80%; margin-bottom:1.2rem;"></div>
-      <div style="height:10px; background:#F5EDF0; border-radius:3px; margin-bottom:6px;"></div>
-      <div style="height:10px; background:#F5EDF0; border-radius:3px; width:70%;"></div>
-    </div>
-    <div class="article-skeleton" style="background:#F5F4EF; border:1px solid rgba(194,24,91,0.08); border-radius:16px; padding:1.8rem;">
-      <div style="width:60px; height:6px; background:#EDE0E5; border-radius:3px; margin-bottom:1rem;"></div>
-      <div style="height:14px; background:#EDE0E5; border-radius:4px; margin-bottom:8px;"></div>
-      <div style="height:14px; background:#F0E6EA; border-radius:4px; width:90%; margin-bottom:1.2rem;"></div>
-      <div style="height:10px; background:#F5EDF0; border-radius:3px; margin-bottom:6px;"></div>
-      <div style="height:10px; background:#F5EDF0; border-radius:3px; width:55%;"></div>
-    </div>
-  </div>
-  <a href="https://suamirocham.substack.com" target="_blank" class="btn-outline" style="display:inline-flex; align-items:center; gap:0.6rem;">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 3h12v1.5H2V3zm0 3.5h12V8H2V6.5zM2 10h7v1.5H2V10z" fill="#C2185B"/></svg>
-    Ler no Substack
-  </a>
-</section>
-
-<!-- PRODUTOS -->
-<section id="produtos" style="padding: 6rem 5rem; background: #F5F4EF;">
-  <div class="section-label">Produtos</div>
-  <h2>O que estou <em>construindo</em></h2>
-  <div class="deco-line"></div>
-  <p style="font-size:0.95rem; color:#6D2B40; font-weight:300; max-width:560px; margin-bottom:3rem; line-height:1.8;">
-    Além de dados, construo ferramentas que resolvem problemas reais — com Lovable e Supabase.
-  </p>
-  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px,1fr)); gap:2rem;">
-
-    <!-- Junty -->
-    <div class="produto-card" style="background:white; border:1px solid rgba(194,24,91,0.1); border-radius:24px; overflow:hidden; position:relative;">
-      <div style="padding:2rem 2rem 1.5rem; background:linear-gradient(135deg,#EDE0E5,white);">
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
-          <div style="width:52px; height:52px; border-radius:14px; background:#C2185B; display:flex; align-items:center; justify-content:center;">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-              <rect x="3" y="5" width="20" height="16" rx="3" stroke="white" stroke-width="1.8"/>
-              <path d="M3 10h20" stroke="white" stroke-width="1.8"/>
-              <circle cx="8" cy="15" r="1.5" fill="white"/>
-              <circle cx="13" cy="15" r="1.5" fill="white"/>
-              <circle cx="18" cy="15" r="1.5" fill="white"/>
-            </svg>
-          </div>
-          <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; background:#FCE4EC; color:#C2185B; border:1px solid rgba(194,24,91,0.2); padding:0.25rem 0.8rem; border-radius:50px; font-weight:500;"><a href="usejunty.lovable.app" target="_blank" class="btn-outline" >Acessar</a></span>
-        </div>
-        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#2C1018; margin-bottom:0.5rem;">Junty</h3>
-        <p style="font-size:0.82rem; color:#C2185B; font-weight:500; letter-spacing:0.05em;">Scheduling inteligente</p>
-      </div>
-      <div style="padding:1.2rem 2rem 2rem;">
-        <p style="font-size:0.9rem; color:#6D2B40; line-height:1.7; font-weight:300; margin-bottom:1.5rem;">
-          Encontra o melhor horário para reuniões considerando a disponibilidade de todos os participantes e envia os convites por e-mail automaticamente.
-        </p>
-        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem;">
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Lovable</span>
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Supabase</span>
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Email API</span>
-        </div>
-        <span style="font-size:0.82rem; color:#A0536A; display:flex; align-items:center; gap:0.5rem;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#A0536A" stroke-width="1.3"/><path d="M7 4v3.5l2 1.5" stroke="#A0536A" stroke-width="1.3" stroke-linecap="link"/></svg>
-          usejunty.lovable.app
-        </span>
-      </div>
-    </div>
-
-    <!-- Testyme -->
-    <div class="produto-card" style="background:white; border:1px solid rgba(194,24,91,0.1); border-radius:24px; overflow:hidden; position:relative;">
-      <div style="padding:2rem 2rem 1.5rem; background:linear-gradient(135deg,#EDE0E5,white);">
-        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem;">
-          <div style="width:52px; height:52px; border-radius:14px; background:#C2185B; display:flex; align-items:center; justify-content:center;">
-            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-              <path d="M7 5h12a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2z" stroke="white" stroke-width="1.8"/>
-              <path d="M9 11l2.5 2.5L17 9" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <span style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; background:#FCE4EC; color:#C2185B; border:1px solid rgba(194,24,91,0.2); padding:0.25rem 0.8rem; border-radius:50px; font-weight:500;"><a href="www.testyme.com.br" target="_blank" class="btn-outline" >www.testyme.com.br</a></span>
-        </div>
-        <h3 style="font-family:'Playfair Display',serif; font-size:1.4rem; font-weight:700; color:#2C1018; margin-bottom:0.5rem;">Testyme</h3>
-        <p style="font-size:0.82rem; color:#C2185B; font-weight:500; letter-spacing:0.05em;">Prepare-se para qualquer entrevista</p>
-      </div>
-      <div style="padding:1.2rem 2rem 2rem;">
-        <p style="font-size:0.9rem; color:#6D2B40; line-height:1.7; font-weight:300; margin-bottom:1.5rem;">
-          Testes de código, criação de portfólio guiado e simulações de entrevista com IA — tudo que você precisa para conquistar sua vaga em tech.
-        </p>
-        <div style="display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:1.5rem;">
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Lovable</span>
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">Supabase</span>
-          <span style="font-size:0.7rem; font-weight:500; padding:0.25rem 0.7rem; border-radius:6px; background:rgba(194,24,91,0.07); color:#8B1A4A;">IA</span>
-        </div>
-        <span style="font-size:0.82rem; color:#A0536A; display:flex; align-items:center; gap:0.5rem;">
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#A0536A" stroke-width="1.3"/><path d="M7 4v3.5l2 1.5" stroke="#A0536A" stroke-width="1.3" stroke-linecap="link"/></svg>
-          www.testyme.com.br
-        </span>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="contato">
-  <div class="contact-layout">
-    <div>
-      <div class="section-label">Vamos conversar</div>
-      <h2>Pronta para o <em>próximo desafio</em></h2>
-      <p class="contact-copy">Busco oportunidades como Analista de Dados onde possa aplicar minha capacidade analítica, conhecimento técnico e experiência com metodologias ágeis para gerar valor real ao negócio.</p>
-    </div>
-    <div class="contact-links">
-      <a href="https://www.linkedin.com/in/surocham/" class="contact-link" target="_blank">
-        <div class="link-icon">in</div>
-        <div class="link-meta"><span class="link-label">LinkedIn</span><span class="link-value">linkedin.com/in/surocham</span></div>
-      </a>
-      <a href="mailto:suamirochati@gmail.com" class="contact-link">
-        <div class="link-icon">✉</div>
-        <div class="link-meta"><span class="link-label">E-mail</span><span class="link-value">suamirochati@gmail.com</span></div>
-      </a>
-      <a href="https://github.com/surocham" class="contact-link" target="_blank">
-        <div class="link-icon">gh</div>
-        <div class="link-meta"><span class="link-label">GitHub</span><span class="link-value">github.com/surocham</span></div>
-      </a>
-      <a href="/assets/CV_Analista_Suami_Medeiros_2026.pdf" class="contact-link" download>
-        <div class="link-icon">↓</div>
-        <div class="link-meta"><span class="link-label">Currículo</span><span class="link-value">Baixar CV em PDF</span></div>
-      </a>
-    </div>
+<section class="contact-section" id="contato">
+  <p class="section-label reveal">Contato</p>
+  <h2 class="reveal">Vamos conversar<br>sobre <em>dados</em>?</h2>
+  <p class="reveal">Aberta a oportunidades, colaborações e trocar ideia sobre tech e representatividade.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:suamirochati@gmail.com" class="contact-link primary">suamirochati@gmail.com</a>
+    <a href="https://www.linkedin.com/in/surocham/" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="https://github.com/surocham" target="_blank" class="contact-link">GitHub</a>
+    <a href="https://medium.com/@surocham" target="_blank" class="contact-link">Medium</a>
+    <a href="https://suamirocham.substack.com" target="_blank" class="contact-link">Substack</a>
+    <a href="https://www.youtube.com/@SuamiMedeiros-Data" target="_blank" class="contact-link">YouTube</a>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 Suami Evelin Rocha de Medeiros</p>
-  <p>Feito com dados, código e muita atitude</p>
+  <p>© 2026 Suami Evelin Rocha de Medeiros · Feito com dados, código e muita atitude</p>
+  <a href="https://www.linkedin.com/in/surocham/">linkedin.com/in/surocham</a>
 </footer>
 
-
-
-
-
-
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-gsap.registerPlugin(ScrollTrigger);
+// Nav toggle
+var t = document.getElementById('navToggle'), l = document.getElementById('navLinks');
+t.addEventListener('click', function() { t.classList.toggle('open'); l.classList.toggle('open'); });
+l.querySelectorAll('a').forEach(function(a) { a.addEventListener('click', function() { t.classList.remove('open'); l.classList.remove('open'); }); });
 
-// Hamburger
-var navT = document.getElementById('navToggle');
-var navL = document.getElementById('navLinks');
-if (navT) {
-  navT.addEventListener('click', function() {
-    navT.classList.toggle('open');
-    navL.classList.toggle('open');
-  });
-  navL.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      navT.classList.remove('open');
-      navL.classList.remove('open');
-    });
-  });
-}
+// Scroll reveal
+var reveals = document.querySelectorAll('.reveal');
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+reveals.forEach(function(r, i) { r.style.transitionDelay = (i % 4) * 0.08 + 's'; observer.observe(r); });
 
-// RSS Substack com múltiplos proxies
+// RSS Substack
 function renderSubstack(xmlText) {
   var parser = new DOMParser();
   var xml = parser.parseFromString(xmlText, 'text/xml');
@@ -534,21 +441,19 @@ function renderSubstack(xmlText) {
   var grid = document.getElementById('substack-grid');
   if (!items.length || !grid) return false;
   grid.innerHTML = '';
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1rem;margin-top:3rem;';
   items.forEach(function(item) {
     var title = item.querySelector('title') ? item.querySelector('title').textContent : '';
     var link = item.querySelector('link') ? item.querySelector('link').textContent : '#';
     var desc = item.querySelector('description') ? item.querySelector('description').textContent.replace(/<[^>]*>/g, '').slice(0, 140) + '...' : '';
     var date = item.querySelector('pubDate') ? new Date(item.querySelector('pubDate').textContent).toLocaleDateString('pt-BR', {day:'2-digit', month:'short', year:'numeric'}) : '';
     var a = document.createElement('a');
-    a.href = link;
-    a.target = '_blank';
-    a.style.cssText = 'background:#F5F4EF;border:1px solid rgba(194,24,91,0.1);border-radius:16px;padding:1.8rem;text-decoration:none;display:block;transition:transform 0.2s;';
-    a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
-    a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
-    a.innerHTML = '<div style="font-size:0.68rem;color:#A0536A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.8rem;">' + date + '</div>'
-      + '<h3 style="font-family:\'Playfair Display\',serif;font-size:1.05rem;font-weight:700;color:#2C1018;margin-bottom:0.8rem;line-height:1.4;">' + title + '</h3>'
-      + '<p style="font-size:0.85rem;color:#6D2B40;line-height:1.6;font-weight:300;margin-bottom:1rem;">' + desc + '</p>'
-      + '<span style="font-size:0.8rem;font-weight:500;color:#C2185B;">Ler artigo \u2192</span>';
+    a.href = link; a.target = '_blank';
+    a.className = 'article-card';
+    a.innerHTML = '<div class="article-source">' + date + '</div>'
+      + '<div class="article-title">' + title + '</div>'
+      + '<div class="article-desc">' + desc + '</div>'
+      + '<div class="article-link">Ler artigo →</div>';
     grid.appendChild(a);
   });
   return true;
@@ -560,20 +465,14 @@ var proxies = [
   { url: 'https://corsproxy.io/?' + FEED_URL, json: false },
   { url: 'https://api.codetabs.com/v1/proxy?quest=' + FEED_URL, json: false }
 ];
-
 function tryProxy(i) {
   if (i >= proxies.length) return;
   var p = proxies[i];
-  fetch(p.url)
-    .then(function(r) { return r.text(); })
-    .then(function(text) {
-      var content = text;
-      if (p.json) {
-        try { content = JSON.parse(text).contents; } catch(e) {}
-      }
-      if (!renderSubstack(content)) tryProxy(i + 1);
-    })
-    .catch(function() { tryProxy(i + 1); });
+  fetch(p.url).then(function(r) { return r.text(); }).then(function(text) {
+    var content = text;
+    if (p.json) { try { content = JSON.parse(text).contents; } catch(e) {} }
+    if (!renderSubstack(content)) tryProxy(i + 1);
+  }).catch(function() { tryProxy(i + 1); });
 }
 tryProxy(0);
 
@@ -592,104 +491,26 @@ fetch('https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.yo
       var linkEl = entry.querySelector('link');
       var videoUrl = linkEl ? (linkEl.getAttribute('href') || linkEl.textContent) : '';
       var videoId = videoUrl.split('v=')[1] || '';
-      if (!videoId) {
-        var idEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015', 'videoId')[0];
-        if (idEl) videoId = idEl.textContent;
-      }
+      if (!videoId) { var idEl = entry.getElementsByTagNameNS('http://www.youtube.com/xml/schemas/2015','videoId')[0]; if (idEl) videoId = idEl.textContent; }
       var link = 'https://www.youtube.com/watch?v=' + videoId;
       var thumb = 'https://img.youtube.com/vi/' + videoId + '/hqdefault.jpg';
       var a = document.createElement('a');
-      a.href = link;
-      a.target = '_blank';
-      a.style.cssText = 'border-radius:16px;overflow:hidden;background:white;border:1px solid rgba(194,24,91,0.08);text-decoration:none;display:block;transition:transform 0.2s;';
-      a.addEventListener('mouseenter', function() { this.style.transform = 'translateY(-4px)'; });
-      a.addEventListener('mouseleave', function() { this.style.transform = 'translateY(0)'; });
+      a.href = link; a.target = '_blank';
+      a.style.cssText = 'border-radius:var(--radius);overflow:hidden;background:white;border:1px solid var(--border);text-decoration:none;display:block;transition:transform 0.2s,box-shadow 0.2s;';
+      a.addEventListener('mouseenter', function() { this.style.transform='translateY(-4px)'; this.style.boxShadow='0 12px 32px rgba(0,0,0,0.08)'; });
+      a.addEventListener('mouseleave', function() { this.style.transform='translateY(0)'; this.style.boxShadow='none'; });
       a.innerHTML = '<div style="position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;">'
         + '<img src="' + thumb + '" style="width:100%;height:100%;object-fit:cover;" alt="' + title + '">'
-        + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(194,24,91,0.15);">'
-        + '<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(194,24,91,0.85)"/><polygon points="19,16 35,24 19,32" fill="white"/></svg>'
+        + '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(212,96,122,0.15);">'
+        + '<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="rgba(212,96,122,0.85)"/><polygon points="19,16 35,24 19,32" fill="white"/></svg>'
         + '</div></div>'
         + '<div style="padding:1rem 1.2rem 1.4rem;">'
-        + '<p style="font-size:0.88rem;font-weight:500;color:#2C1018;line-height:1.5;">' + title + '</p>'
+        + '<p style="font-size:0.86rem;font-weight:500;color:var(--ink);line-height:1.5;">' + title + '</p>'
         + '</div>';
       grid.appendChild(a);
     });
-  })
-  .catch(function() {});
-
-window.addEventListener('load', function() {
-  // Hero
-  var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-  tl.from('nav', { y: -60, opacity: 0, duration: 0.7 })
-    .from('.hero-eyebrow', { x: -30, opacity: 0, duration: 0.5 }, '-=0.3')
-    .from('h1', { y: 40, opacity: 0, duration: 0.7 }, '-=0.3')
-    .from('.hero-tagline', { y: 24, opacity: 0, duration: 0.5 }, '-=0.4')
-    .from('.hero-ctas .btn-primary', { x: -20, opacity: 0, duration: 0.4 }, '-=0.3')
-    .from('.hero-ctas .btn-outline', { x: -20, opacity: 0, duration: 0.4 }, '-=0.25')
-    .from('.hero-photo-wrap', { scale: 0.85, opacity: 0, duration: 0.8, ease: 'back.out(1.4)' }, '-=0.7')
-    .from('.hero-badge', { x: 30, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.3')
-    .from('.hero-badge2', { x: -30, opacity: 0, duration: 0.5, ease: 'back.out(2)' }, '-=0.4')
-    .from('.skills-strip', { opacity: 0, y: 20, duration: 0.4 }, '-=0.2');
-
-  // Floating badges
-  gsap.to('.hero-badge', { y: -8, duration: 2.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-  gsap.to('.hero-badge2', { y: 6, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: 0.5 });
-
-  // Sobre
-  gsap.from('#sobre h2', { scrollTrigger: { trigger: '#sobre', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('.about-text p', { scrollTrigger: { trigger: '.about-text', start: 'top 82%' }, y: 20, opacity: 0, duration: 0.5, stagger: 0.12 });
-  gsap.from('.tool-tag', { scrollTrigger: { trigger: '.tools-grid', start: 'top 86%' }, scale: 0.7, opacity: 0, duration: 0.35, stagger: 0.05, ease: 'back.out(2)' });
-  gsap.from('.stat-card', { scrollTrigger: { trigger: '.about-stats', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.12, ease: 'back.out(1.4)' });
-
-  // Stat counters
-  var targets = [20, 10, 91, 12];
-  var suffixes = ['%', '+', '', ''];
-  document.querySelectorAll('.stat-num').forEach(function(el, i) {
-    var obj = { val: 0 };
-    gsap.to(obj, {
-      val: targets[i], duration: 1.6, ease: 'power2.out',
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-      onUpdate: function() { el.textContent = Math.round(obj.val) + suffixes[i]; }
-    });
-  });
-
-  // Projetos
-  gsap.from('#projetos h2', { scrollTrigger: { trigger: '#projetos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('.project-card', { scrollTrigger: { trigger: '.projects-grid', start: 'top 82%' }, y: 50, opacity: 0, duration: 0.6, stagger: 0.18 });
-
-  // YouTube
-  gsap.from('#youtube h2', { scrollTrigger: { trigger: '#youtube', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('#yt-grid > *', { scrollTrigger: { trigger: '#yt-grid', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.15 });
-
-  // Artigos
-  gsap.from('#artigos h2', { scrollTrigger: { trigger: '#artigos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('#substack-grid > *', { scrollTrigger: { trigger: '#substack-grid', start: 'top 82%' }, y: 40, opacity: 0, duration: 0.5, stagger: 0.15 });
-
-  // Produtos
-  gsap.from('#produtos h2', { scrollTrigger: { trigger: '#produtos', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('.produto-card', { scrollTrigger: { trigger: '#produtos', start: 'top 78%' }, y: 50, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'back.out(1.4)' });
-
-  // Contato
-  gsap.from('#contato h2', { scrollTrigger: { trigger: '#contato', start: 'top 80%' }, y: 30, opacity: 0, duration: 0.6 });
-  gsap.from('.contact-link', { scrollTrigger: { trigger: '.contact-links', start: 'top 85%' }, x: 30, opacity: 0, duration: 0.45, stagger: 0.1 });
-
-  // Hover cards
-  document.querySelectorAll('.project-card, .produto-card').forEach(function(card) {
-    card.addEventListener('mouseenter', function() { gsap.to(card, { y: -8, duration: 0.25 }); });
-    card.addEventListener('mouseleave', function() { gsap.to(card, { y: 0, duration: 0.25 }); });
-  });
-  document.querySelectorAll('.contact-link').forEach(function(link) {
-    link.addEventListener('mouseenter', function() { gsap.to(link, { x: 6, duration: 0.2 }); });
-    link.addEventListener('mouseleave', function() { gsap.to(link, { x: 0, duration: 0.2 }); });
-  });
-
-  // Nav shrink
-  ScrollTrigger.create({
-    start: 'top -60',
-    onEnter: function() { gsap.to('nav', { padding: '0.6rem 3rem', duration: 0.3 }); },
-    onLeaveBack: function() { gsap.to('nav', { padding: '1rem 3rem', duration: 0.3 }); }
-  });
-});
+  }).catch(function() {});
 </script>
+
 </body>
 </html>
